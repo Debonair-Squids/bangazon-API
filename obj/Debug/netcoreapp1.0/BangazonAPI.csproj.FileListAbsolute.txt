@@ -1,0 +1,3 @@
+/Users/paulellis/workspace/cloneTest/csharp-bangazonapi-boilerplate/obj/Debug/netcoreapp1.0/BangazonAPI.csproj.CoreCompileInputs.cache
+/Users/paulellis/workspace/cloneTest/csharp-bangazonapi-boilerplate/obj/Debug/netcoreapp1.0/BangazonAPI.AssemblyInfoInputs.cache
+/Users/paulellis/workspace/cloneTest/csharp-bangazonapi-boilerplate/obj/Debug/netcoreapp1.0/BangazonAPI.AssemblyInfo.cs
