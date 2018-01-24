@@ -3,3 +3,8 @@
 lib
 build
 .pdf
+bin
+obj
+*.db
+*.sqlite3
+.vscode
