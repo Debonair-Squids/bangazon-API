@@ -14,7 +14,9 @@ namespace BangazonAPI.Models
     public string TrainingName { get; set; }
 
     public DateTime StartDate { get; set;}
+
     public DateTime EndDate { get; set; }
+
     public int MaxAttendes { get; set;}
   }
 }
