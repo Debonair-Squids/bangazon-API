@@ -17,6 +17,6 @@ namespace BangazonAPI.Models
 
     public DateTime EndDate { get; set; }
 
-    public int MaxAttendes { get; set;}
+    public int MaxAttendees { get; set;}
   }
 }
