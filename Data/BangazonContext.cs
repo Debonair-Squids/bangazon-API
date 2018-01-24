@@ -14,6 +14,7 @@ namespace BangazonAPI.Data
         public DbSet<Training> Training { get; set; }
         public DbSet<ProductType> ProductType { get; set; }
         public DbSet<Product> Product { get; set;}
+        public DbSet<EmployeeTraining> EmployeeTraining { get; set; }
 
 
 // USE THIS LATER FOR ORDER CREATIONS
