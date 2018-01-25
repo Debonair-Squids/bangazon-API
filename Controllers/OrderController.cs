@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using BangazonAPI.Data;
+using bangazon_inc.Data;
+using bangazon_inc.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace bangazon_inc.Controllers
 {
@@ -16,10 +18,20 @@ namespace bangazon_inc.Controllers
         {
             _context = ctx;
         }
+            [HttpGet]
+        public IActionResult Get()
+        {
+            var orders = _context.Orders.ToList();
+            if (orders == null)
+            {
+                return NotFound();
+            }
+            return Ok(orders);
+        }
 
-        // GET order list
+        // GET
         [HttpGet("{id}", Name = "GetSingleOrder")]
-        public IActionResult Get([FromRoute] int id)
+        public IActionResult Get(int id)
         {
             if (!ModelState.IsValid)
             {
@@ -28,68 +40,39 @@ namespace bangazon_inc.Controllers
 
             try
             {
-                Orders Orders = _context.Order.Include("OrderProduct.Product").Single(m => m.OrderID == id);
-                List <Product> theseProducts = new List <Product>();
-                foreach (OrderProduct OrderProduct in order.OrderProduct)
-                {
-                    theseProducts.Add(OrderProduct.Product);
-                }
-                List <ProductOnOrderJSON> jSONProducts = new List <ProductOnOrderJSON>();
-                foreach (Product product in theseProducts) {
-                    int index = jSONProducts.FindIndex(x => x.ProductID == product.ProductID);
-                    if (index != -1)
-                    {
-                        jSONProducts[index].Quantity ++;
-                    }
-                    else
-                    {
-                        ProductOnOrderJSON newProduct = new ProductOnOrderJSON()
-                        {
-                            ProductID = Product.ProductID,
-                            Name = Product.Title,
-                            Price = Product.Price,
-                            Description = Product.Description,
-                            Quantity = 1
-                        };
-                        jSONProducts.Add(newProduct);
-                    }
-                }
-                OrderWithProductJSON orderWithProducts = new OrderWithProductJSON()
-                {
-                    OrderID = order.OrderID,
-                    CustomerID = order.CustomerID,
-                    PaymentTypeID = order.PaymentTypeID,
-                    Products = jSONProducts
-                };
-                if (order == null)
+                Orders Orders = _context.Orders.Single(o => o.OrderId == id);
+
+                if (Orders == null)
                 {
                     return NotFound();
                 }
 
-                return Ok(orderWithProducts);
+                return Ok(Orders);
             }
-            catch (System.InvalidOperationException ex)
+            catch (System.InvalidOperationException crex)
             {
-                return NotFound(ex);
+                return NotFound();
             }
         }
 
-        // POST
-          [HttpPost]
-        public IActionResult Post([FromBody] Orders newOrder)
+        // POST api/values
+        [HttpPost]
+        public IActionResult Post([FromBody]Orders Orders)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-            _context.Order.Add(newOrder);
+
+            _context.Orders.Add(Orders);
+
             try
             {
                 _context.SaveChanges();
             }
             catch (DbUpdateException)
             {
-                if (OrderExists(newOrder.OrderID))
+                if (OrderExists(Orders.OrderId))
                 {
                     return new StatusCodeResult(StatusCodes.Status409Conflict);
                 }
@@ -98,26 +81,23 @@ namespace bangazon_inc.Controllers
                     throw;
                 }
             }
-            return CreatedAtRoute("GetSingleOrder", new { id = newOrder.OrderID }, newOrder);
+            return CreatedAtRoute("GetSingleOrder", new { id = Orders.OrderId }, Orders);
         }
 
-
-        // PUT
+        // PUT api/values/5
         [HttpPut("{id}")]
-        public IActionResult Put(int id, [FromBody] Orders modifiedOrder)
+        public IActionResult Put(int id, [FromBody]Orders Orders)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != modifiedOrder.OrderID)
+            if (id != Orders.OrderId)
             {
                 return BadRequest();
             }
-
-            _context.Entry(modifiedOrder).State = EntityState.Modified;
-
+            _context.Orders.Update(Orders);
             try
             {
                 _context.SaveChanges();
@@ -141,52 +121,20 @@ namespace bangazon_inc.Controllers
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+            Orders Orders = _context.Orders.Single(o => o.OrderId == id);
 
-            Orders singleOrder = _context.Orders.Single(m => m.OrderID == id);
-            if (singleOrder == null)
+            if (Orders == null)
             {
                 return NotFound();
             }
-            _context.Orders.Remove(singleOrder);
+            _context.Orders.Remove(Orders);
             _context.SaveChanges();
-            return Ok(singleOrder);
+            return Ok(Orders);
+        }
+
+        private bool OrderExists(int OrderId)
+        {
+            return _context.Orders.Any(o => o.OrderId == OrderId);
         }
     }
 }
-// // Adds a product to an order and creates a ProductOrder. This allows us to add multiple products to the same order.
-        // // You need to send up a product order object.
-        // // {"OrderID": integer, "ProductID": integer}
-        // [HttpPost("addproduct")]
-        // public IActionResult Post([FromBody] ProductOrder newProductOrder )
-        // {
-        //     if (!ModelState.IsValid)
-        //     {
-        //         return BadRequest(ModelState);
-        //     }
-        //     _context.ProductOrder.Add(newProductOrder);
-        //     try
-        //     {
-        //         _context.SaveChanges();
-        //     }
-        //     catch (DbUpdateException)
-        //     {
-        //         if (OrderExists(newProductOrder.ProductOrderID))
-        //         {
-        //             return new StatusCodeResult(StatusCodes.Status409Conflict);
-        //         }
-        //         else
-        //         {
-        //             throw;
-        //         }
-        //     }
-        //     return Ok(newProductOrder);
-        // }
-        // // Helper method to check if the order already exists in the database
-        // private bool OrderExists(int orderID)
-        // {
-        //   return _context.Order.Count(e => e.OrderID == orderID) > 0;
-        // }

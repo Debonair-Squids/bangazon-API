@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using bangazon_inc.Data;
 
 namespace bangazon_inc.Models
 {
@@ -18,7 +19,7 @@ namespace bangazon_inc.Models
         public string FirstName { get; set; }
         [Required]
         public string LastName { get; set; }
-        
+
         public DateTime? LastActive { get; set; }
         [Required]
         public Boolean ActiveStatus { get; set; }
