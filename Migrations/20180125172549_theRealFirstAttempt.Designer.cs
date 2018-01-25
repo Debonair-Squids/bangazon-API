@@ -11,8 +11,8 @@ using System;
 namespace bangazoninc.Migrations
 {
     [DbContext(typeof(BangazonContext))]
-    [Migration("20180125164052_SecondFirstTestMigration")]
-    partial class SecondFirstTestMigration
+    [Migration("20180125172549_theRealFirstAttempt")]
+    partial class theRealFirstAttempt
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

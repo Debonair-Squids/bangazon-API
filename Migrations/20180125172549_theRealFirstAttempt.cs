@@ -4,21 +4,10 @@ using System.Collections.Generic;
 
 namespace bangazoninc.Migrations
 {
-    public partial class SecondFirstTestMigration : Migration
+    public partial class theRealFirstAttempt : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.RenameColumn(
-                name: "MaxAttendes",
-                table: "Training",
-                newName: "MaxAttendees");
-
-            migrationBuilder.AlterColumn<DateTime>(
-                name: "EndDate",
-                table: "Employee",
-                nullable: true,
-                oldClrType: typeof(DateTime));
-
             migrationBuilder.CreateTable(
                 name: "Computer",
                 columns: table => new
@@ -52,6 +41,21 @@ namespace bangazoninc.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Department",
+                columns: table => new
+                {
+                    DepartmentId = table.Column<int>(nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Budget = table.Column<double>(nullable: false),
+                    Name = table.Column<string>(nullable: false),
+                    SupervisorId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Department", x => x.DepartmentId);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "PaymentType",
                 columns: table => new
                 {
@@ -78,28 +82,41 @@ namespace bangazoninc.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "EmployeeComputer",
+                name: "Training",
                 columns: table => new
                 {
-                    EmployeeComputerId = table.Column<int>(nullable: false)
+                    TrainingId = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    ComputerId = table.Column<int>(nullable: false),
-                    EmployeeId = table.Column<int>(nullable: false)
+                    EndDate = table.Column<DateTime>(nullable: false),
+                    MaxAttendees = table.Column<int>(nullable: false),
+                    StartDate = table.Column<DateTime>(nullable: false),
+                    TrainingName = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_EmployeeComputer", x => x.EmployeeComputerId);
+                    table.PrimaryKey("PK_Training", x => x.TrainingId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Employee",
+                columns: table => new
+                {
+                    EmployeeId = table.Column<int>(nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    DepartmentId = table.Column<int>(nullable: false),
+                    EndDate = table.Column<DateTime>(nullable: true),
+                    Name = table.Column<string>(nullable: false),
+                    StartDate = table.Column<DateTime>(nullable: false),
+                    Supervisor = table.Column<bool>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Employee", x => x.EmployeeId);
                     table.ForeignKey(
-                        name: "FK_EmployeeComputer_Computer_ComputerId",
-                        column: x => x.ComputerId,
-                        principalTable: "Computer",
-                        principalColumn: "ComputerId",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_EmployeeComputer_Employee_EmployeeId",
-                        column: x => x.EmployeeId,
-                        principalTable: "Employee",
-                        principalColumn: "EmployeeId",
+                        name: "FK_Employee_Department_DepartmentId",
+                        column: x => x.DepartmentId,
+                        principalTable: "Department",
+                        principalColumn: "DepartmentId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -158,6 +175,58 @@ namespace bangazoninc.Migrations
                         column: x => x.CustomerId,
                         principalTable: "Customer",
                         principalColumn: "CustomerId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "EmployeeComputer",
+                columns: table => new
+                {
+                    EmployeeComputerId = table.Column<int>(nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    ComputerId = table.Column<int>(nullable: false),
+                    EmployeeId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_EmployeeComputer", x => x.EmployeeComputerId);
+                    table.ForeignKey(
+                        name: "FK_EmployeeComputer_Computer_ComputerId",
+                        column: x => x.ComputerId,
+                        principalTable: "Computer",
+                        principalColumn: "ComputerId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_EmployeeComputer_Employee_EmployeeId",
+                        column: x => x.EmployeeId,
+                        principalTable: "Employee",
+                        principalColumn: "EmployeeId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "EmployeeTraining",
+                columns: table => new
+                {
+                    EmployeeTrainingId = table.Column<int>(nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    EmployeeId = table.Column<int>(nullable: false),
+                    TrainingId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_EmployeeTraining", x => x.EmployeeTrainingId);
+                    table.ForeignKey(
+                        name: "FK_EmployeeTraining_Employee_EmployeeId",
+                        column: x => x.EmployeeId,
+                        principalTable: "Employee",
+                        principalColumn: "EmployeeId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_EmployeeTraining_Training_TrainingId",
+                        column: x => x.TrainingId,
+                        principalTable: "Training",
+                        principalColumn: "TrainingId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -226,6 +295,12 @@ namespace bangazoninc.Migrations
                 column: "PaymentTypeID");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Employee_DepartmentId",
+                table: "Employee",
+                column: "DepartmentId",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_EmployeeComputer_ComputerId",
                 table: "EmployeeComputer",
                 column: "ComputerId");
@@ -234,6 +309,16 @@ namespace bangazoninc.Migrations
                 name: "IX_EmployeeComputer_EmployeeId",
                 table: "EmployeeComputer",
                 column: "EmployeeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_EmployeeTraining_EmployeeId",
+                table: "EmployeeTraining",
+                column: "EmployeeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_EmployeeTraining_TrainingId",
+                table: "EmployeeTraining",
+                column: "TrainingId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_OrderProduct_OrderId",
@@ -272,16 +357,28 @@ namespace bangazoninc.Migrations
                 name: "EmployeeComputer");
 
             migrationBuilder.DropTable(
+                name: "EmployeeTraining");
+
+            migrationBuilder.DropTable(
                 name: "OrderProduct");
 
             migrationBuilder.DropTable(
                 name: "Computer");
 
             migrationBuilder.DropTable(
+                name: "Employee");
+
+            migrationBuilder.DropTable(
+                name: "Training");
+
+            migrationBuilder.DropTable(
                 name: "Orders");
 
             migrationBuilder.DropTable(
                 name: "Product");
+
+            migrationBuilder.DropTable(
+                name: "Department");
 
             migrationBuilder.DropTable(
                 name: "CustomerPayment");
@@ -294,18 +391,6 @@ namespace bangazoninc.Migrations
 
             migrationBuilder.DropTable(
                 name: "PaymentType");
-
-            migrationBuilder.RenameColumn(
-                name: "MaxAttendees",
-                table: "Training",
-                newName: "MaxAttendes");
-
-            migrationBuilder.AlterColumn<DateTime>(
-                name: "EndDate",
-                table: "Employee",
-                nullable: false,
-                oldClrType: typeof(DateTime),
-                oldNullable: true);
         }
     }
 }
