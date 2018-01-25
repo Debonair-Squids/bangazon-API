@@ -5,8 +5,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using BangazonAPI.Data;
-using BangazonAPI.Models;
+using bangazon_inc.Data;
+using bangazon_inc.Models;
 
 namespace bangazon_inc.Controllers
 {
@@ -119,7 +119,7 @@ namespace bangazon_inc.Controllers
 
         private bool CustomerExists(int customerId)
         {
-            return _context.Customer.Any(g => g.CustomerId == CustomerId);
+            return _context.Customer.Any(g => g.CustomerId == customerId);
         }
     }
 
