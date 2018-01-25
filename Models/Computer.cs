@@ -18,5 +18,4 @@ namespace BangazonAPI.Models {
         [Required]
         public Boolean ActiveStatus {get; set;}
     }
-
 }
