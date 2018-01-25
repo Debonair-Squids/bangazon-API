@@ -17,7 +17,7 @@ namespace BangazonAPI.Models
         public DateTime OrderDate { get; set; }
 
         [Required]
-        
+
         public Boolean CompleteStatus { get; set; }
 
         [Required]
