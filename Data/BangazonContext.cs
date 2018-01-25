@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
-using BangazonAPI.Models;
+using bangazon_inc.Models;
 
-namespace BangazonAPI.Data
+namespace bangazon_inc.Data
 {
     public class BangazonContext : DbContext
     {
