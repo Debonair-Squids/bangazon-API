@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace BangazonAPI.Models
 {
     public class EmployeeComputer {
-        
+
         [Key]
         public int EmployeeComputerId {get; set;}
 
@@ -18,5 +18,5 @@ namespace BangazonAPI.Models
         public int ComputerId {get; set;}
         public Computer Computer {get; set; }
     }
-    
+
 }

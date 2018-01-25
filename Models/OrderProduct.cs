@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace BangazonAPI.Models
 {
     public class OrderProduct {
-        
+
         [Key]
         public int OrderProductId {get; set;}
 
@@ -16,7 +16,7 @@ namespace BangazonAPI.Models
 
         [Required]
         public int OrderId {get; set;}
-        public Order Order {get; set; }
+        public Orders Orders {get; set; }
     }
-    
+
 }
