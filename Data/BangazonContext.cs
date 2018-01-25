@@ -15,10 +15,14 @@ namespace BangazonAPI.Data
         public DbSet<Computer> Computer {get; set; }
         public DbSet<EmployeeComputer> EmployeeComputer {get; set; }
         public DbSet<OrderProduct> OrderProduct {get; set; }
-        
+
         public DbSet<ProductType> ProductType { get; set; }
         public DbSet<Product> Product { get; set;}
         public DbSet<EmployeeTraining> EmployeeTraining { get; set; }
+        public DbSet<Customer> Customer { get; set; }
+        public DbSet<CustomerPayment> CustomerPayment { get; set; }
+        public DbSet<Orders> Orders { get; set; }
+        public DbSet<PaymentType> PaymentType { get; set; }
 
 
 // USE THIS LATER FOR ORDER CREATIONS
