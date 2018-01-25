@@ -5,24 +5,26 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BangazonAPI.Models
 {
-  public class Employee
-  {
-    [Key]
-    public int EmployeeId { get; set; }
+    public class Employee
+    {
+        [Key]
+        public int EmployeeId { get; set; }
 
-    [Required]
-    public string Name { get; set; }
-    [Required]
+        [Required]
+        public string FirstName { get; set; }
+        [Required]
+        public string LastName { get; set; }
+        [Required]
 
-    // department id foreign key
-    public int DepartmentId { get; set;}
-    [Required]
-    public Department Department { get; set; }
-    [Required]
-    public bool Supervisor { get; set;}
-    [Required]
-    public DateTime StartDate { get; set; }
-    public DateTime? EndDate { get; set; }
+        // department id foreign key
+        public int DepartmentId { get; set; }
+        [Required]
+        public Department Department { get; set; }
+        [Required]
+        public bool Supervisor { get; set; }
+        [Required]
+        public DateTime StartDate { get; set; }
+        public DateTime? EndDate { get; set; }
 
-  }
+    }
 }
