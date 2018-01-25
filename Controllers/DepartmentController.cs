@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using BangazonAPI.Data;
-using BangazonAPI.Models;
+using bangazon_inc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Http;
 

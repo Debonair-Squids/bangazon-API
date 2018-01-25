@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using bangazon_inc.Models;
 
+
 namespace bangazon_inc.Data
 {
     public class BangazonContext : DbContext
