@@ -180,7 +180,7 @@ namespace bangazoninc.Migrations
 
                     b.Property<bool>("CompleteStatus");
 
-                    b.Property<int>("CustomerID");
+                    b.Property<int>("CustomerId");
 
                     b.Property<int>("CustomerPaymentId");
 
@@ -189,7 +189,7 @@ namespace bangazoninc.Migrations
 
                     b.HasKey("OrderId");
 
-                    b.HasIndex("CustomerID");
+                    b.HasIndex("CustomerId");
 
                     b.HasIndex("CustomerPaymentId");
 
@@ -336,7 +336,7 @@ namespace bangazoninc.Migrations
                 {
                     b.HasOne("bangazon_inc.Models.Customer", "Customer")
                         .WithMany()
-                        .HasForeignKey("CustomerID")
+                        .HasForeignKey("CustomerId")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("bangazon_inc.Models.CustomerPayment", "CustomerPayment")

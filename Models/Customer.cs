@@ -19,7 +19,7 @@ namespace bangazon_inc.Models
         public string FirstName { get; set; }
         [Required]
         public string LastName { get; set; }
-        
+
         public DateTime? LastActive { get; set; }
         [Required]
         public Boolean ActiveStatus { get; set; }

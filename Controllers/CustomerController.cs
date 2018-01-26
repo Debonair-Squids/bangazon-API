@@ -12,7 +12,7 @@ namespace bangazon_inc.Controllers
 {
     public class CustomerController : Controller
     {
-        private BangazonContext _context;    
+        private BangazonContext _context;
         // Constructor method to create an instance of context to communicate with our database.
         public CustomerController(BangazonContext ctx)
         {
@@ -131,4 +131,3 @@ namespace bangazon_inc.Controllers
 }
 
 
-    
