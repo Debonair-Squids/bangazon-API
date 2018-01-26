@@ -88,7 +88,7 @@ namespace bangazon_inc.Controllers
                 }
             }
 
-            return CreatedAtRoute("GetSingleCustomer", new { id = newTraining.TrainingId }, newTraining);
+            return CreatedAtRoute("GetSingleTraining", new { id = newTraining.TrainingId }, newTraining);
         }
 
         private bool TrainingExists(int TrainingId)
