@@ -3,15 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using bangazon_inc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Http;
+using bangazon_inc.Models;
+using bangazon_inc.Data;
 
 namespace bangazon_inc.Controllers
 {
     //Author Paul Ellis
-    //sets the route to the name of the website/'department'
-    [Route("api/[controller]")]
+    //sets the route to the name of the website/'Department'
+    [Route("[controller]")]
 
     //creates a new DepartmentController class
     public class DepartmentController : Controller
@@ -29,23 +30,41 @@ namespace bangazon_inc.Controllers
             return _context.Department.Count(e => e.DepartmentId == departmentID) > 0;
         }
 
-        // GET api/values
-        //<designated website>/department/  will return a list of all Departments. 
+        // GET Single Department
+         //http://localhost:5000/Department/{id} will return info on a single Department based on ID 
+        [HttpGet("{id}", Name = "GetSingleDepartment")]
 
-            // [HttpGet]
-            // public IEnumerable<string> Get()
-            // {
-            //     return new string[] { "value1", "value2" };
-            // }
+        //will run Get based on the id from the url route. 
+        public IActionResult Get([FromRoute] int id)
+        {
+            //if you request anything other than an Id you will get a return of BadRequest. 
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
 
-            // // GET api/values/5
-            // [HttpGet("{id}")]
-            // public string Get(int id)
-            // {
-            //     return "value";
-            // }
+            try
+            {
+                //will search the _context.Department for an entry that has the id we are looking for
+                //if found, will return that Department
+                //if not found will return 404. 
+                Department singleDepartment = _context.Department.Single(m => m.DepartmentId == id);
 
-            // POST api/values
+                if (singleDepartment == null)
+                {
+                    return NotFound();
+                }
+                
+                return Ok(singleDepartment);
+            }
+            //if the try statement fails for some reason, will return error of what happened. 
+            catch (System.InvalidOperationException ex)
+            {
+                return NotFound(ex);
+            }
+        }
+
+           // POST api/values
         [HttpPost]
         public IActionResult Post([FromBody]Department dept)
         {
@@ -71,7 +90,7 @@ namespace bangazon_inc.Controllers
                     throw;
                 }
             }
-            return CreatedAtRoute("GetSingleAlbum", new { id = dept.DepartmentId }, dept);
+            return CreatedAtRoute("GetSingleDepartment", new { id = dept.DepartmentId }, dept);
         }
 
         // // PUT api/values/5
