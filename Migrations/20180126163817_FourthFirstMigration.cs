@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace bangazoninc.Migrations
 {
-    public partial class thirdFirstMigration : Migration
+    public partial class FourthFirstMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -237,7 +237,7 @@ namespace bangazoninc.Migrations
                     OrderId = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     CompleteStatus = table.Column<bool>(nullable: false),
-                    CustomerID = table.Column<int>(nullable: false),
+                    CustomerId = table.Column<int>(nullable: false),
                     CustomerPaymentId = table.Column<int>(nullable: false),
                     OrderDate = table.Column<DateTime>(nullable: false)
                 },
@@ -245,8 +245,8 @@ namespace bangazoninc.Migrations
                 {
                     table.PrimaryKey("PK_Orders", x => x.OrderId);
                     table.ForeignKey(
-                        name: "FK_Orders_Customer_CustomerID",
-                        column: x => x.CustomerID,
+                        name: "FK_Orders_Customer_CustomerId",
+                        column: x => x.CustomerId,
                         principalTable: "Customer",
                         principalColumn: "CustomerId",
                         onDelete: ReferentialAction.Cascade);
@@ -330,9 +330,9 @@ namespace bangazoninc.Migrations
                 column: "ProductId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Orders_CustomerID",
+                name: "IX_Orders_CustomerId",
                 table: "Orders",
-                column: "CustomerID");
+                column: "CustomerId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Orders_CustomerPaymentId",
