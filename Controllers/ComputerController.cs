@@ -105,69 +105,7 @@ namespace bangazon_inc.Controllers
           return _context.Computer.Count(e => e.ComputerId == ComputerId) > 0;
         }
 
-        // // PUT url/Computer/{id}
-        // // Edits a Specific Computer from the database
-        // // Requires an Object:
-        // // {
-        // //     "ComputerId": 1,
-        // //     "datePurchased": "1988-01-18T00:00:00",
-        // //     "dateDecomissioned": "0001-01-01T00:00:00"
-        // // }
-
-        // [HttpPut("{id}")]
-        // public IActionResult Put(int id, [FromBody] Computer modifiedComputer)
-        // {
-        //     if (!ModelState.IsValid)
-        //     {
-        //         return BadRequest(ModelState);
-        //     }
-
-        //     if (id != modifiedComputer.ComputerId)
-        //     {
-        //         return BadRequest();
-        //     }
-
-        //     _context.Entry(modifiedComputer).State = EntityState.Modified;
-
-        //     try
-        //     {
-        //         _context.SaveChanges();
-        //     }
-        //     catch (DbUpdateConcurrencyException)
-        //     {
-        //         if (!ComputerExists(id))
-        //         {
-        //             return NotFound();
-        //         }
-        //         else
-        //         {
-        //             throw;
-        //         }
-        //     }
-
-        //     return new StatusCodeResult(StatusCodes.Status204NoContent);
-        // }
-        // // DELETE url/Computer/{id}
-        // // Removes a specific Computer from the database correlated to the id in the url
-        // [HttpDelete("{id}")]
-        // public IActionResult Delete(int id)
-        // {
-        //     if (!ModelState.IsValid)
-        //     {
-        //         return BadRequest(ModelState);
-        //     }
-
-        //     Computer computer = _context.Computer.Single(m => m.ComputerId == id);
-        //     if (computer == null)
-        //     {
-        //         return NotFound();
-        //     }
-
-        //     _context.Computer.Remove(computer);
-        //     _context.SaveChanges();
-
-        //     return Ok(computer);
-        // }
+       
 
     }
 }
