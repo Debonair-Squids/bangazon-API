@@ -55,15 +55,15 @@ namespace bangazon_inc.Controllers
             }
         }
 
-        // POST api/values
+        // POST
         [HttpPost]
         public IActionResult Post([FromBody]Orders Orders)
         {
+            // Orders.OrderDate = DateTime.Now;
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-
             _context.Orders.Add(Orders);
 
             try
@@ -84,7 +84,7 @@ namespace bangazon_inc.Controllers
             return CreatedAtRoute("GetSingleOrder", new { id = Orders.OrderId }, Orders);
         }
 
-        // PUT api/values/5
+        // PUT 
         [HttpPut("{id}")]
         public IActionResult Put(int id, [FromBody]Orders Orders)
         {

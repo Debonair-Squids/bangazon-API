@@ -25,13 +25,5 @@ namespace bangazon_inc.Data
         public DbSet<Orders> Orders { get; set; }
         public DbSet<PaymentType> PaymentType { get; set; }
 
-
-// USE THIS LATER FOR ORDER CREATIONS
-        // protected override void OnModelCreating(ModelBuilder modelBuilder)
-        // {
-        //     modelBuilder.Entity<Order>()
-        //         .Property(b => b.DateCreated)
-        //         .HasDefaultValueSql("strftime('%Y-%m-%d %H:%M:%S')");
-        // }
     }
 }
