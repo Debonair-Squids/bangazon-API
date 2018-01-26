@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using bangazon_inc.Data;
 
 namespace bangazon_inc.Models
 {
@@ -12,9 +13,7 @@ namespace bangazon_inc.Models
 
         [Required]
         public string Name { get; set; }
-        [Required]
-        public int SupervisorId { get; set; }
-        public Employee Employee { get; set; }
+        
         [Required]
         public double Budget { get; set; }
     }
