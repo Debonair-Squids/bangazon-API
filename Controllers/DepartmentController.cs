@@ -25,13 +25,35 @@ namespace bangazon_inc.Controllers
             _context = ctx;
         }
 
-        private bool DepartmentExists(int departmentID)
+        
+        //returns a boolean of whether the department exist.  Will be called in methods below
+        private bool DepartmentExists(int departmentId)
         {
-            return _context.Department.Count(e => e.DepartmentId == departmentID) > 0;
+            return _context.Department.Count(e => e.DepartmentId == departmentId) > 0;
+        }
+
+        // General Get Method
+        //<designated address>/department/ will return a list of all Departments. 
+        [HttpGet]
+
+        public IActionResult Get()
+        {
+            //Sets a new IQuerable Collection of <objects> that will be filled with each instance of _context.Department
+            IQueryable<Department> Departments = from department in _context.Department select department;
+
+            //if the collection is empty will retur NotFound and exit the method. 
+            if (Departments == null)
+            {
+                return NotFound();
+            }
+
+            //otherwise return list of the Departments
+            return Ok(Departments);
+
         }
 
         // GET Single Department
-         //http://localhost:5000/Department/{id} will return info on a single Department based on ID 
+         //http://localhost:5000/Department/{id} will return info on a single Department based on Department.Id
         [HttpGet("{id}", Name = "GetSingleDepartment")]
 
         //will run Get based on the id from the url route. 
@@ -45,9 +67,7 @@ namespace bangazon_inc.Controllers
 
             try
             {
-                //will search the _context.Department for an entry that has the id we are looking for
-                //if found, will return that Department
-                //if not found will return 404. 
+                //searches the _context.Department for an entry that has the matching DepartmentId value
                 Department singleDepartment = _context.Department.Single(m => m.DepartmentId == id);
 
                 if (singleDepartment == null)
@@ -57,7 +77,7 @@ namespace bangazon_inc.Controllers
                 
                 return Ok(singleDepartment);
             }
-            //if the try statement fails for some reason, will return error of what happened. 
+            //if it fails, send the error back
             catch (System.InvalidOperationException ex)
             {
                 return NotFound(ex);
@@ -93,11 +113,38 @@ namespace bangazon_inc.Controllers
             return CreatedAtRoute("GetSingleDepartment", new { id = dept.DepartmentId }, dept);
         }
 
-        // // PUT api/values/5
-        // [HttpPut("{id}")]
-        // public void Put(int id, [FromBody]string value)
-        // {
-        // }
+        // PUT method to change values in a table
+        [HttpPut("{id}")]
+        public IActionResult Put(int id, [FromBody]Department dept)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            if (id != dept.DepartmentId)
+            {
+                return BadRequest();
+            }
+            _context.Department.Update(dept);
+            try
+            {
+                _context.SaveChanges();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!DepartmentExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return new StatusCodeResult(StatusCodes.Status204NoContent);
+        }
 
     }
 }
