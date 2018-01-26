@@ -40,7 +40,11 @@ namespace bangazon_inc.Controllers
 
             return Ok(computers);
         }
-
+        // Check if the computer exists in the database
+        private bool ComputerExists(int ComputerId)
+        {
+            return _context.Computer.Count(e => e.ComputerId == ComputerId) > 0;
+        }
         // GET Single Computer http://localhost:5000/Computer/9
 
         [HttpGet("{id}", Name = "GetSingleComputer")]
@@ -99,13 +103,73 @@ namespace bangazon_inc.Controllers
 
             return CreatedAtRoute("GetSingleComputer", new { id = newComputer.ComputerId }, newComputer);
         }
-        // Checks if the computer already exists in the database
-        private bool ComputerExists(int ComputerId)
+
+
+        // PUT Edit Computer http://localhost:5000/Computer/1
+
+        // Object:
+        // {
+        //     "ComputerId": 1,
+        //     "datePurchased": "1-1-2001",
+        //     "dateDecomissioned": "1-1-2001",
+        //     "activeStatus": True
+        // }
+
+        [HttpPut("{id}")]
+        public IActionResult Put(int id, [FromBody] Computer editComputer)
         {
-          return _context.Computer.Count(e => e.ComputerId == ComputerId) > 0;
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            if (id != editComputer.ComputerId)
+            {
+                return BadRequest();
+            }
+
+            _context.Entry(editComputer).State = EntityState.Modified;
+
+            try
+            {
+                _context.SaveChanges();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!ComputerExists(id))
+                {
+                    return new StatusCodeResult(StatusCodes.Status204NoContent);
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+
+            return CreatedAtRoute("GetSingleComputer", new { id = editComputer.ComputerId }, editComputer);
+        }
+        // DELETE Computer http://localhost:5000/Computer/1
+        [HttpDelete("{id}")]
+        public IActionResult Delete(int id)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            Computer deleteComputer = _context.Computer.Single(m => m.ComputerId == id);
+            if (deleteComputer == null)
+            {
+                return NotFound();
+            }
+
+            _context.Computer.Remove(deleteComputer);
+            _context.SaveChanges();
+
+            return Ok(deleteComputer);
         }
 
-       
 
     }
 }

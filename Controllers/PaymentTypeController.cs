@@ -142,7 +142,7 @@ namespace bangazon_inc.Controllers
             {
                 if (!PaymentTypeExists(id))
                 {
-                    return NotFound();
+                    return new StatusCodeResult(StatusCodes.Status204NoContent);
                 }
                 else
                 {
@@ -150,7 +150,7 @@ namespace bangazon_inc.Controllers
                 }
             }
 
-            return new StatusCodeResult(StatusCodes.Status204NoContent);
+            return CreatedAtRoute("GetSinglePaymentType", new { id = editPaymentType.PaymentTypeId }, editPaymentType);
         }
 
         // Deletes PaymentType http://localhost:5000/PaymentType/9
