@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace bangazoninc.Migrations
 {
-    public partial class initial : Migration
+    public partial class thirdFirstMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -47,8 +47,7 @@ namespace bangazoninc.Migrations
                     DepartmentId = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     Budget = table.Column<double>(nullable: false),
-                    Name = table.Column<string>(nullable: false),
-                    SupervisorId = table.Column<int>(nullable: false)
+                    Name = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -105,7 +104,8 @@ namespace bangazoninc.Migrations
                         .Annotation("Sqlite:Autoincrement", true),
                     DepartmentId = table.Column<int>(nullable: false),
                     EndDate = table.Column<DateTime>(nullable: true),
-                    Name = table.Column<string>(nullable: false),
+                    FirstName = table.Column<string>(nullable: false),
+                    LastName = table.Column<string>(nullable: false),
                     StartDate = table.Column<DateTime>(nullable: false),
                     Supervisor = table.Column<bool>(nullable: false)
                 },
@@ -297,8 +297,7 @@ namespace bangazoninc.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Employee_DepartmentId",
                 table: "Employee",
-                column: "DepartmentId",
-                unique: true);
+                column: "DepartmentId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_EmployeeComputer_ComputerId",

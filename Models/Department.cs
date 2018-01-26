@@ -13,9 +13,7 @@ namespace bangazon_inc.Models
 
         [Required]
         public string Name { get; set; }
-        [Required]
-        public int SupervisorId { get; set; }
-        public Employee Employee { get; set; }
+        
         [Required]
         public double Budget { get; set; }
     }
