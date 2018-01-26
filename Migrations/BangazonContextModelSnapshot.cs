@@ -65,15 +65,15 @@ namespace bangazoninc.Migrations
 
                     b.Property<int>("AccountNumber");
 
-                    b.Property<int>("CustomerID");
+                    b.Property<int>("CustomerId");
 
-                    b.Property<int>("PaymentTypeID");
+                    b.Property<int>("PaymentTypeId");
 
                     b.HasKey("CustomerPaymentId");
 
-                    b.HasIndex("CustomerID");
+                    b.HasIndex("CustomerId");
 
-                    b.HasIndex("PaymentTypeID");
+                    b.HasIndex("PaymentTypeId");
 
                     b.ToTable("CustomerPayment");
                 });
@@ -279,12 +279,12 @@ namespace bangazoninc.Migrations
                 {
                     b.HasOne("bangazon_inc.Models.Customer", "Customer")
                         .WithMany()
-                        .HasForeignKey("CustomerID")
+                        .HasForeignKey("CustomerId")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("bangazon_inc.Models.PaymentType", "PaymentType")
                         .WithMany()
-                        .HasForeignKey("PaymentTypeID")
+                        .HasForeignKey("PaymentTypeId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
