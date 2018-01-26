@@ -5,14 +5,13 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage;
-using Microsoft.EntityFrameworkCore.Storage.Internal;
 using System;
 
 namespace bangazoninc.Migrations
 {
     [DbContext(typeof(BangazonContext))]
-    [Migration("20180126192410_FifthFirstMigration")]
-    partial class FifthFirstMigration
+    [Migration("20180126194835_SixthFirstMigration")]
+    partial class SixthFirstMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -44,13 +43,13 @@ namespace bangazoninc.Migrations
 
                     b.Property<bool>("ActiveStatus");
 
-                    b.Property<DateTime>("DateCreated")
-                        .ValueGeneratedOnAddOrUpdate();
+                    b.Property<string>("DateCreated")
+                        .IsRequired();
 
                     b.Property<string>("FirstName")
                         .IsRequired();
 
-                    b.Property<DateTime?>("LastActive");
+                    b.Property<string>("LastActive");
 
                     b.Property<string>("LastName")
                         .IsRequired();
@@ -261,11 +260,13 @@ namespace bangazoninc.Migrations
                     b.Property<int>("TrainingId")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<DateTime>("EndDate");
+                    b.Property<string>("EndDate")
+                        .IsRequired();
 
                     b.Property<int>("MaxAttendees");
 
-                    b.Property<DateTime>("StartDate");
+                    b.Property<string>("StartDate")
+                        .IsRequired();
 
                     b.Property<string>("TrainingName")
                         .IsRequired();
