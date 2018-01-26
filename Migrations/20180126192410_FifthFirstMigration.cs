@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace bangazoninc.Migrations
 {
-    public partial class FourthFirstMigration : Migration
+    public partial class FifthFirstMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -15,8 +15,8 @@ namespace bangazoninc.Migrations
                     ComputerId = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     ActiveStatus = table.Column<bool>(nullable: false),
-                    DateDecommissioned = table.Column<DateTime>(nullable: true),
-                    DatePurchased = table.Column<DateTime>(nullable: false)
+                    DateDecommissioned = table.Column<string>(nullable: true),
+                    DatePurchased = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -103,10 +103,10 @@ namespace bangazoninc.Migrations
                     EmployeeId = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     DepartmentId = table.Column<int>(nullable: false),
-                    EndDate = table.Column<DateTime>(nullable: true),
+                    EndDate = table.Column<string>(nullable: true),
                     FirstName = table.Column<string>(nullable: false),
                     LastName = table.Column<string>(nullable: false),
-                    StartDate = table.Column<DateTime>(nullable: false),
+                    StartDate = table.Column<string>(nullable: false),
                     Supervisor = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
@@ -239,7 +239,7 @@ namespace bangazoninc.Migrations
                     CompleteStatus = table.Column<bool>(nullable: false),
                     CustomerId = table.Column<int>(nullable: false),
                     CustomerPaymentId = table.Column<int>(nullable: false),
-                    OrderDate = table.Column<DateTime>(nullable: false)
+                    OrderDate = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
