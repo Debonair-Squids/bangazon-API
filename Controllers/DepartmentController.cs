@@ -93,7 +93,7 @@ namespace bangazon_inc.Controllers
                 return BadRequest(ModelState);
             }
 
-            _context.Entry(dept).State = EntityState.Modified;
+            _context.Department.Add(dept);
 
             try
             {
