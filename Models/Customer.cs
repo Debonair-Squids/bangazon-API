@@ -12,15 +12,13 @@ namespace bangazon_inc.Models
         public int CustomerId { get; set; }
 
         [Required]
-        [DataType(DataType.Date)]
-        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
-        public DateTime DateCreated { get; set; }
+        public string DateCreated { get; set; }
         [Required]
         public string FirstName { get; set; }
         [Required]
         public string LastName { get; set; }
 
-        public DateTime? LastActive { get; set; }
+        public string LastActive { get; set; }
         [Required]
         public Boolean ActiveStatus { get; set; }
 
