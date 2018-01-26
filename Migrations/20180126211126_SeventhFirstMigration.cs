@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace bangazoninc.Migrations
 {
-    public partial class SixthFirstMigration : Migration
+    public partial class SeventhFirstMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -127,21 +127,21 @@ namespace bangazoninc.Migrations
                     CustomerPaymentId = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     AccountNumber = table.Column<int>(nullable: false),
-                    CustomerID = table.Column<int>(nullable: false),
-                    PaymentTypeID = table.Column<int>(nullable: false)
+                    CustomerId = table.Column<int>(nullable: false),
+                    PaymentTypeId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_CustomerPayment", x => x.CustomerPaymentId);
                     table.ForeignKey(
-                        name: "FK_CustomerPayment_Customer_CustomerID",
-                        column: x => x.CustomerID,
+                        name: "FK_CustomerPayment_Customer_CustomerId",
+                        column: x => x.CustomerId,
                         principalTable: "Customer",
                         principalColumn: "CustomerId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_CustomerPayment_PaymentType_PaymentTypeID",
-                        column: x => x.PaymentTypeID,
+                        name: "FK_CustomerPayment_PaymentType_PaymentTypeId",
+                        column: x => x.PaymentTypeId,
                         principalTable: "PaymentType",
                         principalColumn: "PaymentTypeId",
                         onDelete: ReferentialAction.Cascade);
@@ -285,14 +285,14 @@ namespace bangazoninc.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_CustomerPayment_CustomerID",
+                name: "IX_CustomerPayment_CustomerId",
                 table: "CustomerPayment",
-                column: "CustomerID");
+                column: "CustomerId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_CustomerPayment_PaymentTypeID",
+                name: "IX_CustomerPayment_PaymentTypeId",
                 table: "CustomerPayment",
-                column: "PaymentTypeID");
+                column: "PaymentTypeId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Employee_DepartmentId",
