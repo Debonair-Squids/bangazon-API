@@ -19,5 +19,4 @@ namespace bangazon_inc.Models {
         [Required]
         public Boolean ActiveStatus {get; set;}
     }
-
 }

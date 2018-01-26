@@ -17,9 +17,8 @@ namespace bangazon_inc.Controllers
     //creates a new DepartmentController class
     public class CustomerController : Controller
     {
-        //variable to hold the context instance
         private BangazonContext _context;
-        //create instance of the context
+        // Constructor method to create an instance of context to communicate with our database.
         public CustomerController(BangazonContext ctx)
         {
             _context = ctx;
@@ -240,4 +239,3 @@ namespace bangazon_inc.Controllers
 // }
 
 
-    
