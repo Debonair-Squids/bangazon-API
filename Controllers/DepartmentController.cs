@@ -26,7 +26,7 @@ namespace bangazon_inc.Controllers
         }
 
         
-
+        //returns a boolean of whether the department exist.  Will be called in methods below
         private bool DepartmentExists(int departmentId)
         {
             return _context.Department.Count(e => e.DepartmentId == departmentId) > 0;
@@ -113,6 +113,38 @@ namespace bangazon_inc.Controllers
             return CreatedAtRoute("GetSingleDepartment", new { id = dept.DepartmentId }, dept);
         }
 
+        // PUT method to change values in a table
+        [HttpPut("{id}")]
+        public IActionResult Put(int id, [FromBody]Department dept)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            if (id != dept.DepartmentId)
+            {
+                return BadRequest();
+            }
+            _context.Department.Update(dept);
+            try
+            {
+                _context.SaveChanges();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!DepartmentExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return new StatusCodeResult(StatusCodes.Status204NoContent);
+        }
 
     }
 }
