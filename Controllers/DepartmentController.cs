@@ -25,9 +25,11 @@ namespace bangazon_inc.Controllers
             _context = ctx;
         }
 
-        private bool DepartmentExists(int departmentID)
+        
+
+        private bool DepartmentExists(int departmentId)
         {
-            return _context.Department.Count(e => e.DepartmentId == departmentID) > 0;
+            return _context.Department.Count(e => e.DepartmentId == departmentId) > 0;
         }
 
         // General Get Method
