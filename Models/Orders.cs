@@ -12,10 +12,7 @@ namespace bangazon_inc.Models
         public int OrderId { get; set; }
 
         [Required]
-
-        [DataType(DataType.Date)]
-        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
-        public DateTime OrderDate { get; set; }
+        public string OrderDate { get; set; }
 
         [Required]
 

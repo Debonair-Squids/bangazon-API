@@ -18,6 +18,11 @@ namespace bangazon_inc.Models
     [Required]
     public DateTime EndDate { get; set; }
     [Required]
+    [Required]
+    public string StartDate { get; set;}
+    [Required]
+    public string EndDate { get; set; }
+    [Required]
     public int MaxAttendees { get; set;}
   }
 }

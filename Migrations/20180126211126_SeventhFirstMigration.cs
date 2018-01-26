@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace bangazoninc.Migrations
 {
-    public partial class FourthFirstMigration : Migration
+    public partial class SeventhFirstMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -15,8 +15,8 @@ namespace bangazoninc.Migrations
                     ComputerId = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     ActiveStatus = table.Column<bool>(nullable: false),
-                    DateDecommissioned = table.Column<DateTime>(nullable: true),
-                    DatePurchased = table.Column<DateTime>(nullable: false)
+                    DateDecommissioned = table.Column<string>(nullable: true),
+                    DatePurchased = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -30,9 +30,9 @@ namespace bangazoninc.Migrations
                     CustomerId = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     ActiveStatus = table.Column<bool>(nullable: false),
-                    DateCreated = table.Column<DateTime>(nullable: false),
+                    DateCreated = table.Column<string>(nullable: false),
                     FirstName = table.Column<string>(nullable: false),
-                    LastActive = table.Column<DateTime>(nullable: true),
+                    LastActive = table.Column<string>(nullable: true),
                     LastName = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
@@ -86,9 +86,9 @@ namespace bangazoninc.Migrations
                 {
                     TrainingId = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    EndDate = table.Column<DateTime>(nullable: false),
+                    EndDate = table.Column<string>(nullable: false),
                     MaxAttendees = table.Column<int>(nullable: false),
-                    StartDate = table.Column<DateTime>(nullable: false),
+                    StartDate = table.Column<string>(nullable: false),
                     TrainingName = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
@@ -103,10 +103,10 @@ namespace bangazoninc.Migrations
                     EmployeeId = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     DepartmentId = table.Column<int>(nullable: false),
-                    EndDate = table.Column<DateTime>(nullable: true),
+                    EndDate = table.Column<string>(nullable: true),
                     FirstName = table.Column<string>(nullable: false),
                     LastName = table.Column<string>(nullable: false),
-                    StartDate = table.Column<DateTime>(nullable: false),
+                    StartDate = table.Column<string>(nullable: false),
                     Supervisor = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
@@ -127,21 +127,21 @@ namespace bangazoninc.Migrations
                     CustomerPaymentId = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     AccountNumber = table.Column<int>(nullable: false),
-                    CustomerID = table.Column<int>(nullable: false),
-                    PaymentTypeID = table.Column<int>(nullable: false)
+                    CustomerId = table.Column<int>(nullable: false),
+                    PaymentTypeId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_CustomerPayment", x => x.CustomerPaymentId);
                     table.ForeignKey(
-                        name: "FK_CustomerPayment_Customer_CustomerID",
-                        column: x => x.CustomerID,
+                        name: "FK_CustomerPayment_Customer_CustomerId",
+                        column: x => x.CustomerId,
                         principalTable: "Customer",
                         principalColumn: "CustomerId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_CustomerPayment_PaymentType_PaymentTypeID",
-                        column: x => x.PaymentTypeID,
+                        name: "FK_CustomerPayment_PaymentType_PaymentTypeId",
+                        column: x => x.PaymentTypeId,
                         principalTable: "PaymentType",
                         principalColumn: "PaymentTypeId",
                         onDelete: ReferentialAction.Cascade);
@@ -239,7 +239,7 @@ namespace bangazoninc.Migrations
                     CompleteStatus = table.Column<bool>(nullable: false),
                     CustomerId = table.Column<int>(nullable: false),
                     CustomerPaymentId = table.Column<int>(nullable: false),
-                    OrderDate = table.Column<DateTime>(nullable: false)
+                    OrderDate = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -285,14 +285,14 @@ namespace bangazoninc.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_CustomerPayment_CustomerID",
+                name: "IX_CustomerPayment_CustomerId",
                 table: "CustomerPayment",
-                column: "CustomerID");
+                column: "CustomerId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_CustomerPayment_PaymentTypeID",
+                name: "IX_CustomerPayment_PaymentTypeId",
                 table: "CustomerPayment",
-                column: "PaymentTypeID");
+                column: "PaymentTypeId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Employee_DepartmentId",

@@ -12,9 +12,9 @@ namespace bangazon_inc.Models {
         public int ComputerId {get; set;}
 
         [Required]
-        public DateTime DatePurchased {get; set;}
+        public string DatePurchased {get; set;}
 
-        public DateTime? DateDecommissioned {get; set;}
+        public string DateDecommissioned {get; set;}
 
         [Required]
         public Boolean ActiveStatus {get; set;}

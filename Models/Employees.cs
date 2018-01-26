@@ -24,8 +24,8 @@ namespace bangazon_inc.Models
         [Required]
         public bool Supervisor { get; set; }
         [Required]
-        public DateTime StartDate { get; set; }
-        public DateTime? EndDate { get; set; }
+        public string StartDate { get; set; }
+        public string EndDate { get; set; }
 
     }
 }

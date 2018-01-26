@@ -5,14 +5,13 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage;
-using Microsoft.EntityFrameworkCore.Storage.Internal;
 using System;
 
 namespace bangazoninc.Migrations
 {
     [DbContext(typeof(BangazonContext))]
-    [Migration("20180126163817_FourthFirstMigration")]
-    partial class FourthFirstMigration
+    [Migration("20180126211126_SeventhFirstMigration")]
+    partial class SeventhFirstMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -27,9 +26,10 @@ namespace bangazoninc.Migrations
 
                     b.Property<bool>("ActiveStatus");
 
-                    b.Property<DateTime?>("DateDecommissioned");
+                    b.Property<string>("DateDecommissioned");
 
-                    b.Property<DateTime>("DatePurchased");
+                    b.Property<string>("DatePurchased")
+                        .IsRequired();
 
                     b.HasKey("ComputerId");
 
@@ -43,13 +43,13 @@ namespace bangazoninc.Migrations
 
                     b.Property<bool>("ActiveStatus");
 
-                    b.Property<DateTime>("DateCreated")
-                        .ValueGeneratedOnAddOrUpdate();
+                    b.Property<string>("DateCreated")
+                        .IsRequired();
 
                     b.Property<string>("FirstName")
                         .IsRequired();
 
-                    b.Property<DateTime?>("LastActive");
+                    b.Property<string>("LastActive");
 
                     b.Property<string>("LastName")
                         .IsRequired();
@@ -66,15 +66,15 @@ namespace bangazoninc.Migrations
 
                     b.Property<int>("AccountNumber");
 
-                    b.Property<int>("CustomerID");
+                    b.Property<int>("CustomerId");
 
-                    b.Property<int>("PaymentTypeID");
+                    b.Property<int>("PaymentTypeId");
 
                     b.HasKey("CustomerPaymentId");
 
-                    b.HasIndex("CustomerID");
+                    b.HasIndex("CustomerId");
 
-                    b.HasIndex("PaymentTypeID");
+                    b.HasIndex("PaymentTypeId");
 
                     b.ToTable("CustomerPayment");
                 });
@@ -101,7 +101,7 @@ namespace bangazoninc.Migrations
 
                     b.Property<int>("DepartmentId");
 
-                    b.Property<DateTime?>("EndDate");
+                    b.Property<string>("EndDate");
 
                     b.Property<string>("FirstName")
                         .IsRequired();
@@ -109,7 +109,8 @@ namespace bangazoninc.Migrations
                     b.Property<string>("LastName")
                         .IsRequired();
 
-                    b.Property<DateTime>("StartDate");
+                    b.Property<string>("StartDate")
+                        .IsRequired();
 
                     b.Property<bool>("Supervisor");
 
@@ -185,8 +186,8 @@ namespace bangazoninc.Migrations
 
                     b.Property<int>("CustomerPaymentId");
 
-                    b.Property<DateTime>("OrderDate")
-                        .ValueGeneratedOnAddOrUpdate();
+                    b.Property<string>("OrderDate")
+                        .IsRequired();
 
                     b.HasKey("OrderId");
 
@@ -259,11 +260,13 @@ namespace bangazoninc.Migrations
                     b.Property<int>("TrainingId")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<DateTime>("EndDate");
+                    b.Property<string>("EndDate")
+                        .IsRequired();
 
                     b.Property<int>("MaxAttendees");
 
-                    b.Property<DateTime>("StartDate");
+                    b.Property<string>("StartDate")
+                        .IsRequired();
 
                     b.Property<string>("TrainingName")
                         .IsRequired();
@@ -277,12 +280,12 @@ namespace bangazoninc.Migrations
                 {
                     b.HasOne("bangazon_inc.Models.Customer", "Customer")
                         .WithMany()
-                        .HasForeignKey("CustomerID")
+                        .HasForeignKey("CustomerId")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("bangazon_inc.Models.PaymentType", "PaymentType")
                         .WithMany()
-                        .HasForeignKey("PaymentTypeID")
+                        .HasForeignKey("PaymentTypeId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
