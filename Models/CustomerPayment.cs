@@ -14,10 +14,10 @@ namespace bangazon_inc.Models
         [Required]
         public int AccountNumber { get; set; }
         [Required]
-        public int PaymentTypeID { get; set; }
+        public int PaymentTypeId { get; set; }
         public PaymentType PaymentType { get; set; }
         [Required]
-        public int CustomerID { get; set; }
+        public int CustomerId { get; set; }
         public Customer Customer { get; set; }
     }
 }
