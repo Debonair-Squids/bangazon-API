@@ -13,11 +13,11 @@ namespace bangazon_inc.Models
 
     [Required]
     public string TrainingName { get; set; }
-[Required]
+    [Required]
     public DateTime StartDate { get; set;}
-[Required]
+    [Required]
     public DateTime EndDate { get; set; }
-[Required]
+    [Required]
     public int MaxAttendees { get; set;}
   }
 }

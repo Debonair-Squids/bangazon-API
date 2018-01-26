@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using bangazon_inc.Data;
 using bangazon_inc.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 
 namespace bangazon_inc.Controllers
@@ -49,9 +50,9 @@ namespace bangazon_inc.Controllers
 
                 return Ok(Orders);
             }
-            catch (System.InvalidOperationException crex)
+            catch (System.InvalidOperationException ex)
             {
-                return NotFound();
+                return NotFound(ex);
             }
         }
 
