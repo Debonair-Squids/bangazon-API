@@ -13,11 +13,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace bangazon_inc.Controllers
 {
-    //sets the route to the name of the website/'Department'
+    //sets the route to the name of the website/'PaymentType'
     [Route("[controller]")]
 
 
-    // Class to PUT/POST/GET/DELETE payment type
+    // PUT/POST/GET/DELETE PaymentType
     public class PaymentTypeController : Controller
     {
         //Sets up an empty variable _context that will  be a reference of our BangazonAPIContext class
@@ -27,8 +27,7 @@ namespace bangazon_inc.Controllers
             _context = ctx;
         }
 
-        // Get All PaymentType PaymentType http://localhost:5000/PaymentType/9
-
+        // Get All PaymentType PaymentType http://localhost:5000/PaymentType
 
         [HttpGet]
         public IActionResult Get()
@@ -79,11 +78,8 @@ namespace bangazon_inc.Controllers
         {
             return _context.PaymentType.Count(e => e.PaymentTypeId == PaymentTypeId) > 0;
         }
-        // PaymentType http://localhost:5000/PaymentType/
-        // Object:
-        // {
-        //     "PaymentTypeName": "Visa"
-        // }
+        // POST NEW PaymentType http://localhost:5000/PaymentType/
+        // Object: {"PaymentTypeName": "Visa"}
 
         [HttpPost]
         public IActionResult Post([FromBody]PaymentType newPaymentType)
