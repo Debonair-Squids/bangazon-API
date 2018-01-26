@@ -11,8 +11,8 @@ using System;
 namespace bangazoninc.Migrations
 {
     [DbContext(typeof(BangazonContext))]
-    [Migration("20180125211359_initial")]
-    partial class initial
+    [Migration("20180126151154_thirdFirstMigration")]
+    partial class thirdFirstMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -89,8 +89,6 @@ namespace bangazoninc.Migrations
                     b.Property<string>("Name")
                         .IsRequired();
 
-                    b.Property<int>("SupervisorId");
-
                     b.HasKey("DepartmentId");
 
                     b.ToTable("Department");
@@ -105,7 +103,10 @@ namespace bangazoninc.Migrations
 
                     b.Property<DateTime?>("EndDate");
 
-                    b.Property<string>("Name")
+                    b.Property<string>("FirstName")
+                        .IsRequired();
+
+                    b.Property<string>("LastName")
                         .IsRequired();
 
                     b.Property<DateTime>("StartDate");
@@ -114,8 +115,7 @@ namespace bangazoninc.Migrations
 
                     b.HasKey("EmployeeId");
 
-                    b.HasIndex("DepartmentId")
-                        .IsUnique();
+                    b.HasIndex("DepartmentId");
 
                     b.ToTable("Employee");
                 });
@@ -289,8 +289,8 @@ namespace bangazoninc.Migrations
             modelBuilder.Entity("bangazon_inc.Models.Employee", b =>
                 {
                     b.HasOne("bangazon_inc.Models.Department", "Department")
-                        .WithOne("Employee")
-                        .HasForeignKey("bangazon_inc.Models.Employee", "DepartmentId")
+                        .WithMany()
+                        .HasForeignKey("DepartmentId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
