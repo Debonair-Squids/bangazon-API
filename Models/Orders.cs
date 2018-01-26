@@ -28,7 +28,7 @@ namespace bangazon_inc.Models
 
         [Required]
 
-        public int CustomerID { get; set; }
+        public int CustomerId { get; set; }
         public Customer Customer { get; set; }
 
     }
