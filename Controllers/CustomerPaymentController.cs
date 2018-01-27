@@ -73,8 +73,11 @@ namespace bangazon_inc.Controllers
         }
 
         // POST New CustomerPayment http://localhost:5000/CustomerPayment/
-        // Object: {"DatePurchased": "mm-dd-yyyy", "dateDecommissioned": "na","activeStatus": true}
-
+        // Object: {
+        // "AccountNumber": 879988,
+        // "PaymentTypeId": 3,
+        // "CustomerId": 3
+        // }
         [HttpPost]
         public IActionResult Post([FromBody] CustomerPayment newCustomerPayment)
         {
@@ -109,10 +112,10 @@ namespace bangazon_inc.Controllers
 
         // Object:
         // {
-        //     "CustomerPaymentId": 1,
-        //     "datePurchased": "1-1-2001",
-        //     "dateDecomissioned": "1-1-2001",
-        //     "activeStatus": True
+        // 	"customerPaymentId": 1,
+        //  "accountNumber": 1222376,
+        //  "paymentTypeId": 3,
+        //  "customerId": 2
         // }
 
         [HttpPut("{id}")]
