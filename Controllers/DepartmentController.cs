@@ -25,7 +25,7 @@ namespace bangazon_inc.Controllers
             _context = ctx;
         }
 
-        
+
         //returns a boolean of whether the department exist.  Will be called in methods below
         private bool DepartmentExists(int departmentId)
         {
@@ -34,6 +34,7 @@ namespace bangazon_inc.Controllers
 
         // General Get Method
         //<designated address>/department/ will return a list of all Departments. 
+
         [HttpGet]
 
         public IActionResult Get()
@@ -53,7 +54,7 @@ namespace bangazon_inc.Controllers
         }
 
         // GET Single Department
-         //http://localhost:5000/Department/{id} will return info on a single Department based on Department.Id
+        //http://localhost:5000/Department/{id} will return info on a single Department based on Department.Id
         [HttpGet("{id}", Name = "GetSingleDepartment")]
 
         //will run Get based on the id from the url route. 
@@ -74,7 +75,7 @@ namespace bangazon_inc.Controllers
                 {
                     return NotFound();
                 }
-                
+
                 return Ok(singleDepartment);
             }
             //if it fails, send the error back
@@ -84,7 +85,14 @@ namespace bangazon_inc.Controllers
             }
         }
 
-           // POST api/values
+        // POST api/values
+        //Exampe raw json object for testing:
+        /*
+        {
+        	"Budget": 5000.0,
+	        "Name": "TestName"
+        } 
+        */
         [HttpPost]
         public IActionResult Post([FromBody]Department dept)
         {
@@ -114,6 +122,15 @@ namespace bangazon_inc.Controllers
         }
 
         // PUT method to change values in a table
+        //http://localhost:5000/Department/1
+        //Example raw json object for testing
+        /*
+        {
+            "DepartmentId": 1,
+            "Budget": 2000.0,
+            "Name": "TestName"
+        }
+         */
         [HttpPut("{id}")]
         public IActionResult Put(int id, [FromBody]Department dept)
         {

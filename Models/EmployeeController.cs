@@ -85,6 +85,17 @@ namespace bangazon_inc.Controllers
         }
 
            // POST api/values
+        //http://localhost:5000/Employee
+        //Exampe raw json object for testing:
+        /*
+       {
+        "FirstName": "TestFirstName", 
+        "LastName": "TestLastName", 
+        "DepartmentId": 1,
+        "Supervisor": true, 
+        "StartDate": "1/2/2018"
+        } 
+        */
         [HttpPost]
         public IActionResult Post([FromBody]Employee e)
         {
@@ -114,6 +125,19 @@ namespace bangazon_inc.Controllers
         }
 
         // PUT method to change values in a table
+        //http://localhost:5000/Employee/1
+        //Example raw json object for testing
+        /*
+        {
+            "EmployeeId": 1,
+            "FirstName": "TestFirstName", 
+            "LastName": "TestLastName", 
+            "DepartmentId": 1,
+            "Supervisor": true, 
+            "StartDate": "1/2/2018",
+            "EndDate": "1/3/2018"
+        }
+         */
         [HttpPut("{id}")]
         public IActionResult Put(int id, [FromBody]Employee e)
         {
