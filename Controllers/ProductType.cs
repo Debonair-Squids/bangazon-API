@@ -2,10 +2,12 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using bangazon_inc.Data;
 using bangazon_inc.Models;
+using Microsoft.EntityFrameworkCore;
+using System;
 
 namespace bangazon_inc.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
 
     //Create a new class for the product type table controller
     public class ProductTypeController : Controller
@@ -58,20 +60,94 @@ namespace bangazon_inc.Controllers
 
         // POST api/values
         [HttpPost]
-        public void Post([FromBody]string value)
+        public IActionResult Post([FromBody] ProductType newProductType)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            _context.ProductType.Add(newProductType);
+            
+            try
+            {
+                _context.SaveChanges();
+            }
+            catch (DbUpdateException)
+            {
+                if (ProductTypeExists(newProductType.CategoryId))
+                {
+                    return new StatusCodeResult(StatusCodes.Status409Conflict);
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return CreatedAtRoute("GetSingleProductType", new { id = newProductType.CategoryId }, newProductType);
+        }
+
+        private bool ProductTypeExists(int CategoryId)
+        {
+            return _context.ProductType.Any(g => g.CategoryId == CategoryId);
         }
 
         // PUT api/values/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody]string value)
+              public IActionResult PUT (int id, [FromBody] ProductType newProductType)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            if( id != newProductType.CategoryId)
+            {
+                return BadRequest();
+            }
+
+            _context.ProductType.Update(newProductType);
+            
+            try
+            {
+                _context.SaveChanges();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!ProductTypeExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return new StatusCodeResult(StatusCodes.Status204NoContent);
         }
 
         // DELETE api/values/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+              public IActionResult DELETE (int id)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            ProductType productType = _context.ProductType.Single(m => m.CategoryId == id);
+
+            if( productType == null)
+            {
+                return NotFound();
+            }
+
+            _context.ProductType.Remove(productType);
+            _context.SaveChanges();
+
+            return Ok (productType);
+
         }
     }
 }
