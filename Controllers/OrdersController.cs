@@ -160,64 +160,64 @@ namespace bangazon_inc.Controllers
         {
             return _context.Orders.Any(o => o.OrderId == OrderId);
         }
-        // GET url/Orders/{id}
-        // Gets one order based on an id
-        // Formats it for the purposes of clean JSON
-        [HttpGet("{id}", Name = "GetSingleOrder")]
-        public IActionResult Get([FromRoute] int id)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+        // // GET url/Orders/{id}
+        // // Gets one order based on an id
+        // // Formats it for the purposes of clean JSON
+        // [HttpGet("{id}", Name = "GetSingleOrder")]
+        // public IActionResult Get([FromRoute] int id)
+        // {
+        //     if (!ModelState.IsValid)
+        //     {
+        //         return BadRequest(ModelState);
+        //     }
 
-            try
-            {
-                Orders orders = _context.Orders.Include("OrderProduct.Product").Single(m => m.OrderId == id);
-                List<Product> theseProducts = new List<Product>();
-                foreach (OrderProduct OrderProduct in Orders.OrderProduct) /* idk not orders.orderproduct */
-                {
-                    theseProducts.Add(OrderProduct.Product);
-                }
-                List<ProductOnOrderJSON> jSONProducts = new List<ProductOnOrderJSON>();
-                foreach (Product product in theseProducts)
-                {
-                    int index = jSONProducts.FindIndex(x => x.ProductId == product.ProductId);
-                    if (index != -1)
-                    {
-                        jSONProducts[index].Quantity++;
-                    }
-                    else
-                    {
-                        ProductOnOrderJSON newProduct = new ProductOnOrderJSON()
-                        {
-                            ProductId = product.ProductId,
-                            Name = product.Title,
-                            Price = product.Price,
-                            Quantity = 1
-                        };
-                        jSONProducts.Add(newProduct);
-                    }
-                }
-                OrderWithProductJSON orderWithProducts = new OrderWithProductJSON()
-                {
-                    OrderId = orders.OrderId,
-                    CustomerId = orders.CustomerId,
-                    PaymentTypeId = orders.CustomerPaymentId,
-                    Products = jSONProducts
-                };
-                if (orders == null)
-                {
-                    return NotFound();
-                }
+        //     try
+        //     {
+        //         Orders orders = _context.Orders.Include("OrderProduct.Product").Single(m => m.OrderId == id);
+        //         List<Product> theseProducts = new List<Product>();
+        //         foreach (OrderProduct OrderProduct in Orders.OrderProduct) /* idk not orders.orderproduct */
+        //         {
+        //             theseProducts.Add(OrderProduct.Product);
+        //         }
+        //         List<ProductOnOrderJSON> jSONProducts = new List<ProductOnOrderJSON>();
+        //         foreach (Product product in theseProducts)
+        //         {
+        //             int index = jSONProducts.FindIndex(x => x.ProductId == product.ProductId);
+        //             if (index != -1)
+        //             {
+        //                 jSONProducts[index].Quantity++;
+        //             }
+        //             else
+        //             {
+        //                 ProductOnOrderJSON newProduct = new ProductOnOrderJSON()
+        //                 {
+        //                     ProductId = product.ProductId,
+        //                     Name = product.Title,
+        //                     Price = product.Price,
+        //                     Quantity = 1
+        //                 };
+        //                 jSONProducts.Add(newProduct);
+        //             }
+        //         }
+        //         OrderWithProductJSON orderWithProducts = new OrderWithProductJSON()
+        //         {
+        //             OrderId = orders.OrderId,
+        //             CustomerId = orders.CustomerId,
+        //             PaymentTypeId = orders.CustomerPaymentId,
+        //             Products = jSONProducts
+        //         };
+        //         if (orders == null)
+        //         {
+        //             return NotFound();
+        //         }
 
-                return Ok(orderWithProducts);
-            }
-            catch (System.InvalidOperationException ex)
-            {
-                return NotFound(ex);
-            }
-        }
+        //         return Ok(orderWithProducts);
+        //     }
+        //     catch (System.InvalidOperationException ex)
+        //     {
+        //         return NotFound(ex);
+        //     }
+        // }
 
     }
 }
