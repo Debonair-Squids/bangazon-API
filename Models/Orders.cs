@@ -26,6 +26,7 @@ namespace bangazon_inc.Models
         [Required]
         public int CustomerId { get; set; }
         public Customer Customer { get; set; }
+        public virtual ICollection<OrderProduct> ProductOrders {get; set;}
 
     }
 }
