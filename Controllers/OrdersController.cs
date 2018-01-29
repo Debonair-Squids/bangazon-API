@@ -30,32 +30,32 @@ namespace bangazon_inc.Controllers
             return Ok(orders);
         }
 
-        // GET
+        // GET single
 
-        // [HttpGet("{id}", Name = "GetSingleOrder")]
-        // public IActionResult Get(int id)
-        // {
-        //     if (!ModelState.IsValid)
-        //     {
-        //         return BadRequest(ModelState);
-        //     }
+        [HttpGet("{id}", Name = "GetSingleOrder")]
+        public IActionResult Get(int id)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
 
-        //     try
-        //     {
-        //         Orders Orders = _context.Orders.Single(o => o.OrderId == id);
+            try
+            {
+                Orders Orders = _context.Orders.Single(o => o.OrderId == id);
 
-        //         if (Orders == null)
-        //         {
-        //             return NotFound();
-        //         }
+                if (Orders == null)
+                {
+                    return NotFound();
+                }
 
-        //         return Ok(Orders);
-        //     }
-        //     catch (System.InvalidOperationException ex)
-        //     {
-        //         return NotFound(ex);
-        //     }
-        // }
+                return Ok(Orders);
+            }
+            catch (System.InvalidOperationException ex)
+            {
+                return NotFound(ex);
+            }
+        }
 
         // POST
         // example post request
@@ -102,18 +102,18 @@ namespace bangazon_inc.Controllers
         //     "CustomerId": 2
         // }
         [HttpPut("{id}")]
-        public IActionResult Put(int id, [FromBody]Orders Orders)
+        public IActionResult Put(int id, [FromBody]Orders modifiedOrders)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != Orders.OrderId)
+            if (id != modifiedOrders.OrderId)
             {
                 return BadRequest();
             }
-            _context.Orders.Update(Orders);
+            _context.Orders.Update(modifiedOrders);
             try
             {
                 _context.SaveChanges();
@@ -130,7 +130,8 @@ namespace bangazon_inc.Controllers
                 }
             }
 
-            return new StatusCodeResult(StatusCodes.Status204NoContent);
+            // return new StatusCodeResult(StatusCodes.Status204NoContent);
+            return Ok(modifiedOrders);
         }
 
         // DELETE
