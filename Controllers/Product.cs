@@ -34,7 +34,7 @@ namespace bangazon_inc.Controllers
 
         // GET a single product type
         [HttpGet("{id}", Name = "GetSingleProduct")]
-    
+
         public IActionResult Get(int id)
         {
             if (!ModelState.IsValid)
@@ -67,7 +67,7 @@ namespace bangazon_inc.Controllers
                 "customerId": 1,
                 "categoryId": 3,
             }
-         */ 
+         */
         [HttpPost]
         public IActionResult Post([FromBody] Product newProduct)
         {
@@ -77,7 +77,7 @@ namespace bangazon_inc.Controllers
             }
 
             _context.Product.Add(newProduct);
-            
+
             try
             {
                 _context.SaveChanges();
@@ -116,7 +116,7 @@ namespace bangazon_inc.Controllers
             }
 
             _context.Product.Update(newProduct);
-            
+
             try
             {
                 _context.SaveChanges();
