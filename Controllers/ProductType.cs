@@ -58,7 +58,11 @@ namespace bangazon_inc.Controllers
             }
         }
 
-        // POST api/values
+        /* Sample POST request:
+            {
+                "CategoryName":
+            }
+        */
         [HttpPost]
         public IActionResult Post([FromBody] ProductType newProductType)
         {
