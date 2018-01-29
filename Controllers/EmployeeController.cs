@@ -11,51 +11,50 @@ using bangazon_inc.Data;
 namespace bangazon_inc.Controllers
 {
     //Author Paul Ellis
-    //sets the route to the name of the website/'Department'
+    //sets the route to the name of the website/'Employee'
     [Route("[controller]")]
 
-    //creates a new DepartmentController class
-    public class DepartmentController : Controller
+    //creates a new EmployeeController class
+    public class EmployeeController : Controller
     {
         //variable to hold the context instance
         private BangazonContext _context;
         //create instance of the context
-        public DepartmentController(BangazonContext ctx)
+        public EmployeeController(BangazonContext ctx)
         {
             _context = ctx;
         }
 
-
-        //returns a boolean of whether the department exist.  Will be called in methods below
-        private bool DepartmentExists(int departmentId)
+        
+        //returns a boolean of whether the employee exist.  Will be called in methods below
+        private bool EmployeeExists(int employeeId)
         {
-            return _context.Department.Count(e => e.DepartmentId == departmentId) > 0;
+            return _context.Employee.Count(e => e.EmployeeId == employeeId) > 0;
         }
 
         // General Get Method
-        //<designated address>/department/ will return a list of all Departments. 
-
+        //<designated address>/Employee/ will return a list of all Employees. 
         [HttpGet]
 
         public IActionResult Get()
         {
-            //Sets a new IQuerable Collection of <objects> that will be filled with each instance of _context.Department
-            IQueryable<Department> Departments = from department in _context.Department select department;
+            //Sets a new IQuerable Collection of <objects> that will be filled with each instance of _context.Employee
+            IQueryable<Employee> Employees = from Employee in _context.Employee select Employee;
 
-            //if the collection is empty will retur NotFound and exit the method. 
-            if (Departments == null)
+            //if the collection is empty will return NotFound and exit the method. 
+            if (Employees == null)
             {
                 return NotFound();
             }
 
-            //otherwise return list of the Departments
-            return Ok(Departments);
+            //otherwise return list of the Employees
+            return Ok(Employees);
 
         }
 
-        // GET Single Department
-        //http://localhost:5000/Department/{id} will return info on a single Department based on Department.Id
-        [HttpGet("{id}", Name = "GetSingleDepartment")]
+        // GET Single Employee
+         //http://localhost:5000/Employee/{id} will return info on a single Employee based on Employee.Id
+        [HttpGet("{id}", Name = "GetSingleEmployee")]
 
         //will run Get based on the id from the url route. 
         public IActionResult Get([FromRoute] int id)
@@ -68,15 +67,15 @@ namespace bangazon_inc.Controllers
 
             try
             {
-                //searches the _context.Department for an entry that has the matching DepartmentId value
-                Department singleDepartment = _context.Department.Single(m => m.DepartmentId == id);
+                //searches the _context.Employee for an entry that has the matching EmployeeId value
+                Employee singleEmployee = _context.Employee.Single(m => m.EmployeeId == id);
 
-                if (singleDepartment == null)
+                if (singleEmployee == null)
                 {
                     return NotFound();
                 }
-
-                return Ok(singleDepartment);
+                
+                return Ok(singleEmployee);
             }
             //if it fails, send the error back
             catch (System.InvalidOperationException ex)
@@ -85,23 +84,27 @@ namespace bangazon_inc.Controllers
             }
         }
 
-        // POST api/values
+           // POST api/values
+        //http://localhost:5000/Employee
         //Exampe raw json object for testing:
         /*
-        {
-        	"Budget": 5000.0,
-	        "Name": "TestName"
+       {
+        "FirstName": "TestFirstName", 
+        "LastName": "TestLastName", 
+        "DepartmentId": 1,
+        "Supervisor": true, 
+        "StartDate": "1/2/2018"
         } 
         */
         [HttpPost]
-        public IActionResult Post([FromBody]Department dept)
+        public IActionResult Post([FromBody]Employee e)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            _context.Department.Add(dept);
+            _context.Employee.Add(e);
 
             try
             {
@@ -109,7 +112,7 @@ namespace bangazon_inc.Controllers
             }
             catch (DbUpdateException)
             {
-                if (DepartmentExists(dept.DepartmentId))
+                if (EmployeeExists(e.EmployeeId))
                 {
                     return new StatusCodeResult(StatusCodes.Status409Conflict);
                 }
@@ -118,39 +121,43 @@ namespace bangazon_inc.Controllers
                     throw;
                 }
             }
-            return CreatedAtRoute("GetSingleDepartment", new { id = dept.DepartmentId }, dept);
+            return CreatedAtRoute("GetSingleEmployee", new { id = e.EmployeeId }, e);
         }
 
         // PUT method to change values in a table
-        //http://localhost:5000/Department/1
+        //http://localhost:5000/Employee/1
         //Example raw json object for testing
         /*
         {
+            "EmployeeId": 1,
+            "FirstName": "TestFirstName", 
+            "LastName": "TestLastName", 
             "DepartmentId": 1,
-            "Budget": 2000.0,
-            "Name": "TestName"
+            "Supervisor": true, 
+            "StartDate": "1/2/2018",
+            "EndDate": "1/3/2018"
         }
          */
         [HttpPut("{id}")]
-        public IActionResult Put(int id, [FromBody]Department dept)
+        public IActionResult Put(int id, [FromBody]Employee e)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != dept.DepartmentId)
+            if (id != e.EmployeeId)
             {
                 return BadRequest();
             }
-            _context.Department.Update(dept);
+            _context.Employee.Update(e);
             try
             {
                 _context.SaveChanges();
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!DepartmentExists(id))
+                if (!EmployeeExists(id))
                 {
                     return NotFound();
                 }

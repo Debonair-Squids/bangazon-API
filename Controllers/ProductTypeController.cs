@@ -3,19 +3,21 @@ using Microsoft.AspNetCore.Mvc;
 using bangazon_inc.Data;
 using bangazon_inc.Models;
 using Microsoft.EntityFrameworkCore;
+using System;
+using Microsoft.AspNetCore.Http;
 
 namespace bangazon_inc.Controllers
 {
     [Route("[controller]")]
 
     //Create a new class for the product type table controller
-    public class ProductController : Controller
+    public class ProductTypeController : Controller
     {
         //Declare an empty variable "_context" to store BangazonContext Class
         private BangazonContext _context;
 
         //Create a constructor that is equal to BangazonContext. Multiple controller actions will require the same service.  Create a constructor to request those dependencies.
-        public ProductController(BangazonContext ctx){
+        public ProductTypeController(BangazonContext ctx){
             _context = ctx;
         }
 
@@ -25,16 +27,16 @@ namespace bangazon_inc.Controllers
         public IActionResult Get()
         {
             //
-            var Product = _context.Product.ToList();
-            if (Product == null){
+            var ProductType = _context.ProductType.ToList();
+            if (ProductType == null){
                 return NotFound();
             }
-            return Ok(Product);
+            return Ok(ProductType);
         }
 
         // GET a single product type
-        [HttpGet("{id}", Name = "GetSingleProduct")]
-
+        [HttpGet("{id}", Name = "GetSingleProductType")]
+    
         public IActionResult Get(int id)
         {
             if (!ModelState.IsValid)
@@ -43,13 +45,13 @@ namespace bangazon_inc.Controllers
             }
             try
             {
-                Product Product = _context.Product.Single(g => g.ProductId == id);
+                ProductType productType = _context.ProductType.Single(g => g.CategoryId == id);
 
-                if(Product == null)
+                if(productType == null)
                 {
                     return NotFound();
                 }
-                return Ok(Product);
+                return Ok(productType);
             }
             catch (System.InvalidOperationException ex)
             {
@@ -59,32 +61,26 @@ namespace bangazon_inc.Controllers
 
         /* Sample POST request:
             {
-                "name": "bossay bossay",
-                "quantity": 1,
-                "price": 10.00,
-                "title": "kljlfjljfjddlfjlsdjfsa",
-                "description": "I'm bossay",
-                "customerId": 1,
-                "categoryId": 3,
+                "CategoryName":
             }
-         */
+        */
         [HttpPost]
-        public IActionResult Post([FromBody] Product newProduct)
+        public IActionResult Post([FromBody] ProductType newProductType)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            _context.Product.Add(newProduct);
-
+            _context.ProductType.Add(newProductType);
+            
             try
             {
                 _context.SaveChanges();
             }
             catch (DbUpdateException)
             {
-                if (ProductExists(newProduct.ProductId))
+                if (ProductTypeExists(newProductType.CategoryId))
                 {
                     return new StatusCodeResult(StatusCodes.Status409Conflict);
                 }
@@ -94,36 +90,36 @@ namespace bangazon_inc.Controllers
                 }
             }
 
-            return CreatedAtRoute("GetSingleProduct", new { id = newProduct.ProductId }, newProduct);
+            return CreatedAtRoute("GetSingleProductType", new { id = newProductType.CategoryId }, newProductType);
         }
 
-        private bool ProductExists(int ProductId)
+        private bool ProductTypeExists(int CategoryId)
         {
-            return _context.Product.Any(g => g.ProductId == ProductId);
+            return _context.ProductType.Any(g => g.CategoryId == CategoryId);
         }
 
         // PUT api/values/5
         [HttpPut("{id}")]
-              public IActionResult PUT (int id, [FromBody] Product newProduct)
+              public IActionResult PUT (int id, [FromBody] ProductType newProductType)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-            if( id != newProduct.ProductId)
+            if( id != newProductType.CategoryId)
             {
                 return BadRequest();
             }
 
-            _context.Product.Update(newProduct);
-
+            _context.ProductType.Update(newProductType);
+            
             try
             {
                 _context.SaveChanges();
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!ProductExists(id))
+                if (!ProductTypeExists(id))
                 {
                     return NotFound();
                 }
@@ -145,17 +141,17 @@ namespace bangazon_inc.Controllers
                 return BadRequest(ModelState);
             }
 
-            Product product = _context.Product.Single(m => m.ProductId == id);
+            ProductType productType = _context.ProductType.Single(m => m.CategoryId == id);
 
-            if( product == null)
+            if( productType == null)
             {
                 return NotFound();
             }
 
-            _context.Product.Remove(product);
+            _context.ProductType.Remove(productType);
             _context.SaveChanges();
 
-            return Ok (product);
+            return Ok (productType);
 
         }
     }
