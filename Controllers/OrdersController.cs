@@ -55,7 +55,14 @@ namespace bangazon_inc.Controllers
             }
         }
 
-        // POST
+    // POST
+    // example post request
+    // {
+    //     "OrderDate": "1483387800",
+    //     "CompleteStatus": 0,
+    //     "CustomerPaymentId": 2,
+    //     "CustomerId": 2
+    // }
         [HttpPost]
         public IActionResult Post([FromBody]Orders Orders)
         {
@@ -84,7 +91,15 @@ namespace bangazon_inc.Controllers
             return CreatedAtRoute("GetSingleOrder", new { id = Orders.OrderId }, Orders);
         }
 
-        // PUT 
+    // PUT
+    // example put request
+    // {
+    //     "OrderId: 1,
+    //     "OrderDate": "1483387800",
+    //     "CompleteStatus": 0,
+    //     "CustomerPaymentId": 2,
+    //     "CustomerId": 2
+    // }
         [HttpPut("{id}")]
         public IActionResult Put(int id, [FromBody]Orders Orders)
         {
@@ -117,7 +132,15 @@ namespace bangazon_inc.Controllers
             return new StatusCodeResult(StatusCodes.Status204NoContent);
         }
 
-        // DELETE
+    // DELETE
+    // example delete request
+    // {
+    //     "OrderId: 1,
+    //     "OrderDate": "1483387800",
+    //     "CompleteStatus": 0,
+    //     "CustomerPaymentId": 2,
+    //     "CustomerId": 2
+    // }
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
