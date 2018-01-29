@@ -24,7 +24,6 @@ namespace bangazon_inc.Models
         public CustomerPayment CustomerPayment { get; set; }
 
         [Required]
-
         public int CustomerId { get; set; }
         public Customer Customer { get; set; }
 
