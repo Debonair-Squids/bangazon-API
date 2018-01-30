@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using bangazon_inc.Data;
 using bangazon_inc.Models;
@@ -19,6 +19,7 @@ namespace bangazon_inc.Controllers
         {
             _context = ctx;
         }
+        // GET all
         [HttpGet]
         public IActionResult Get()
         {
@@ -30,10 +31,11 @@ namespace bangazon_inc.Controllers
             return Ok(orders);
         }
 
-        // GET single
-
+        // GET url/Orders/{id}
+        // Gets one order based on an id
+        // Formats it for the purposes of clean JSON
         [HttpGet("{id}", Name = "GetSingleOrder")]
-        public IActionResult Get(int id)
+        public IActionResult Get([FromRoute] int id)
         {
             if (!ModelState.IsValid)
             {
@@ -42,14 +44,37 @@ namespace bangazon_inc.Controllers
 
             try
             {
-                Orders Orders = _context.Orders.Single(o => o.OrderId == id);
-
-                if (Orders == null)
+                Orders orders = _context.Orders.Include("ProductOrders.Product").Single(m => m.OrderId == id);
+                List<Product> theseProducts = new List<Product>();
+                foreach (OrderProduct orderProduct in orders.ProductOrders)
+                {
+                    theseProducts.Add(orderProduct.Product);
+                }
+                List<ProductOnOrderJSON> jSONProducts = new List<ProductOnOrderJSON>();
+                foreach (Product product in theseProducts)
+                {
+                    ProductOnOrderJSON newProduct = new ProductOnOrderJSON()
+                    {
+                        ProductId = product.ProductId,
+                        Name = product.Title,
+                        Price = product.Price,
+                        Quantity = 1
+                    };
+                    jSONProducts.Add(newProduct);
+                }
+                OrderWithProductJSON orderWithProducts = new OrderWithProductJSON()
+                {
+                    OrderId = orders.OrderId,
+                    CustomerId = orders.CustomerId,
+                    PaymentTypeId = orders.CustomerPaymentId,
+                    Products = jSONProducts
+                };
+                if (orders == null)
                 {
                     return NotFound();
                 }
 
-                return Ok(Orders);
+                return Ok(orderWithProducts);
             }
             catch (System.InvalidOperationException ex)
             {
@@ -59,12 +84,15 @@ namespace bangazon_inc.Controllers
 
         // POST
         // example post request
-        // {
-        //     "OrderDate": "1483387800",
-        //     "CompleteStatus": 0,
-        //     "CustomerPaymentId": 2,
-        //     "CustomerId": 2
-        // }
+        /*
+       {
+           "OrderId: 1,
+           "OrderDate": "1483387800",
+           "CompleteStatus": 0,
+           "CustomerPaymentId": 2,
+           "CustomerId": 2
+       }
+       */
         [HttpPost]
         public IActionResult Post([FromBody]Orders Orders)
         {
@@ -91,16 +119,17 @@ namespace bangazon_inc.Controllers
             }
             return CreatedAtRoute("GetSingleOrder", new { id = Orders.OrderId }, Orders);
         }
-
         // PUT
         // example put request
-        // {
-        //     "OrderId: 1,
-        //     "OrderDate": "1483387800",
-        //     "CompleteStatus": 0,
-        //     "CustomerPaymentId": 2,
-        //     "CustomerId": 2
-        // }
+        /*
+       {
+           "OrderId: 1,
+           "OrderDate": "1483387800",
+           "CompleteStatus": 0,
+           "CustomerPaymentId": 2,
+           "CustomerId": 2
+       }
+       */
         [HttpPut("{id}")]
         public IActionResult Put(int id, [FromBody]Orders modifiedOrders)
         {
@@ -136,13 +165,15 @@ namespace bangazon_inc.Controllers
 
         // DELETE
         // example delete request
-        // {
-        //     "OrderId: 1,
-        //     "OrderDate": "1483387800",
-        //     "CompleteStatus": 0,
-        //     "CustomerPaymentId": 2,
-        //     "CustomerId": 2
-        // }
+        /*
+        {
+            "OrderId: 1,
+            "OrderDate": "1483387800",
+            "CompleteStatus": 0,
+            "CustomerPaymentId": 2,
+            "CustomerId": 2
+        }
+        */
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
@@ -161,64 +192,6 @@ namespace bangazon_inc.Controllers
         {
             return _context.Orders.Any(o => o.OrderId == OrderId);
         }
-        // // GET url/Orders/{id}
-        // // Gets one order based on an id
-        // // Formats it for the purposes of clean JSON
-        // [HttpGet("{id}", Name = "GetSingleOrder")]
-        // public IActionResult Get([FromRoute] int id)
-        // {
-        //     if (!ModelState.IsValid)
-        //     {
-        //         return BadRequest(ModelState);
-        //     }
-
-        //     try
-        //     {
-        //         Orders orders = _context.Orders.Include("OrderProduct.Product").Single(m => m.OrderId == id);
-        //         List<Product> theseProducts = new List<Product>();
-        //         foreach (OrderProduct OrderProduct in Orders.OrderProduct) /* idk not orders.orderproduct */
-        //         {
-        //             theseProducts.Add(OrderProduct.Product);
-        //         }
-        //         List<ProductOnOrderJSON> jSONProducts = new List<ProductOnOrderJSON>();
-        //         foreach (Product product in theseProducts)
-        //         {
-        //             int index = jSONProducts.FindIndex(x => x.ProductId == product.ProductId);
-        //             if (index != -1)
-        //             {
-        //                 jSONProducts[index].Quantity++;
-        //             }
-        //             else
-        //             {
-        //                 ProductOnOrderJSON newProduct = new ProductOnOrderJSON()
-        //                 {
-        //                     ProductId = product.ProductId,
-        //                     Name = product.Title,
-        //                     Price = product.Price,
-        //                     Quantity = 1
-        //                 };
-        //                 jSONProducts.Add(newProduct);
-        //             }
-        //         }
-        //         OrderWithProductJSON orderWithProducts = new OrderWithProductJSON()
-        //         {
-        //             OrderId = orders.OrderId,
-        //             CustomerId = orders.CustomerId,
-        //             PaymentTypeId = orders.CustomerPaymentId,
-        //             Products = jSONProducts
-        //         };
-        //         if (orders == null)
-        //         {
-        //             return NotFound();
-        //         }
-
-        //         return Ok(orderWithProducts);
-        //     }
-        //     catch (System.InvalidOperationException ex)
-        //     {
-        //         return NotFound(ex);
-        //     }
-        // }
 
     }
 }
