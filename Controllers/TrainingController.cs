@@ -12,6 +12,9 @@ using Microsoft.EntityFrameworkCore;
 namespace bangazon_inc.Controllers
 {
     [Route("[controller]")]
+    [EnableCors("BangazonAllowed")]
+
+
     public class TrainingController : Controller
     {
         private BangazonContext _context;

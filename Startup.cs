@@ -27,6 +27,14 @@ namespace bangazon_inc
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(options =>
+           {
+               options.AddPolicy("BangazonAllowed",
+                   builder => builder.WithOrigins("http://www.bangazon.com:8080")
+                               .AllowAnyHeader()
+                               .AllowAnyMethod()
+               );
+           });
             services.AddMvc();
 
             string path = System.Environment.GetEnvironmentVariable("BANGAZON_DB");
@@ -38,6 +46,8 @@ namespace bangazon_inc
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+            app.UseCors("BangazonAllowed");
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

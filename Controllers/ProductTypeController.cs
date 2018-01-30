@@ -5,10 +5,12 @@ using bangazon_inc.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Cors;
 
 namespace bangazon_inc.Controllers
 {
     [Route("[controller]")]
+    [EnableCors("BangazonAllowed")]
 
     //Create a new class for the product type table controller
     public class ProductTypeController : Controller
