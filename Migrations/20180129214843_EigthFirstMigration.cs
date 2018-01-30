@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace bangazoninc.Migrations
 {
-    public partial class SeventhFirstMigration : Migration
+    public partial class EigthFirstMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -86,9 +86,9 @@ namespace bangazoninc.Migrations
                 {
                     TrainingId = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    EndDate = table.Column<string>(nullable: false),
+                    EndDate = table.Column<DateTime>(nullable: false),
                     MaxAttendees = table.Column<int>(nullable: false),
-                    StartDate = table.Column<string>(nullable: false),
+                    StartDate = table.Column<DateTime>(nullable: false),
                     TrainingName = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
@@ -156,7 +156,6 @@ namespace bangazoninc.Migrations
                     CategoryId = table.Column<int>(nullable: false),
                     CustomerId = table.Column<int>(nullable: false),
                     Description = table.Column<string>(nullable: false),
-                    Name = table.Column<string>(nullable: false),
                     Price = table.Column<double>(nullable: false),
                     Quantity = table.Column<int>(nullable: false),
                     Title = table.Column<string>(nullable: false)

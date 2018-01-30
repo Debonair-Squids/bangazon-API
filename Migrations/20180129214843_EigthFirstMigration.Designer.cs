@@ -5,13 +5,14 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage;
+using Microsoft.EntityFrameworkCore.Storage.Internal;
 using System;
 
 namespace bangazoninc.Migrations
 {
     [DbContext(typeof(BangazonContext))]
-    [Migration("20180126211126_SeventhFirstMigration")]
-    partial class SeventhFirstMigration
+    [Migration("20180129214843_EigthFirstMigration")]
+    partial class EigthFirstMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -223,9 +224,6 @@ namespace bangazoninc.Migrations
                     b.Property<string>("Description")
                         .IsRequired();
 
-                    b.Property<string>("Name")
-                        .IsRequired();
-
                     b.Property<double>("Price");
 
                     b.Property<int>("Quantity");
@@ -260,13 +258,11 @@ namespace bangazoninc.Migrations
                     b.Property<int>("TrainingId")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("EndDate")
-                        .IsRequired();
+                    b.Property<DateTime>("EndDate");
 
                     b.Property<int>("MaxAttendees");
 
-                    b.Property<string>("StartDate")
-                        .IsRequired();
+                    b.Property<DateTime>("StartDate");
 
                     b.Property<string>("TrainingName")
                         .IsRequired();
@@ -326,12 +322,12 @@ namespace bangazoninc.Migrations
             modelBuilder.Entity("bangazon_inc.Models.OrderProduct", b =>
                 {
                     b.HasOne("bangazon_inc.Models.Orders", "Orders")
-                        .WithMany()
+                        .WithMany("ProductOrders")
                         .HasForeignKey("OrderId")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("bangazon_inc.Models.Product", "Product")
-                        .WithMany()
+                        .WithMany("ProductOrders")
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
