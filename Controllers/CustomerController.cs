@@ -24,11 +24,13 @@ namespace bangazon_inc.Controllers
         // GET All Customers
         //http://localhost:5000/Customer/ - Returns ALL customers
         [HttpGet]
-        public IActionResult Get(bool? active)
+        public IActionResult Get()
         {
-            if(active is bool)
+        string active = HttpContext.Request.Query["active"];
+        Console.WriteLine($"{active}");
+            if(active != null)
             {
-                if(active == true)
+                if(active == "true")
                 {
                     //Gets Customers who placed an order
                     IQueryable<object> customers = from customer in _context.Customer
@@ -43,7 +45,7 @@ namespace bangazon_inc.Controllers
                     return Ok(customers);
                 }
 
-                else if (active == false)
+                else if (active == "false")
                 {
                     //Gets Customers who have NOT placed an order
                     IQueryable<object> customers = from customer in _context.Customer
