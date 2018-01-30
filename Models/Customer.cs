@@ -21,6 +21,5 @@ namespace bangazon_inc.Models
         public string LastActive { get; set; }
         [Required]
         public Boolean ActiveStatus { get; set; }
-
     }
 }

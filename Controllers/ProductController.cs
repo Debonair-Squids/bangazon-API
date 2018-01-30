@@ -62,15 +62,14 @@ namespace bangazon_inc.Controllers
         }
 
         /* Sample POST request:
-            {
-                "name": "bossay bossay",
-                "quantity": 1,
-                "price": 10.00,
-                "title": "kljlfjljfjddlfjlsdjfsa",
-                "description": "I'm bossay",
-                "customerId": 1,
-                "categoryId": 3,
-            }
+{
+    "title": "kljlfjljfjddlfjlsdjfsa",
+    "quantity": 1,
+    "price": 10.00,
+    "description": "I'm bossay",
+    "customerId": 1,
+    "categoryId": 3,
+}
          */
         [HttpPost]
         public IActionResult Post([FromBody] Product newProduct)
