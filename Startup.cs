@@ -27,6 +27,11 @@ namespace bangazon_inc
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(options =>
+                {
+                    options.AddPolicy("BangazonAllowed",
+                        builder => builder.WithOrigins("http://www.bangazon.com"));
+                });
             services.AddMvc();
 
             string path = System.Environment.GetEnvironmentVariable("BANGAZON_DB");
@@ -42,6 +47,7 @@ namespace bangazon_inc
             {
                 app.UseDeveloperExceptionPage();
             }
+            app.UseCors("BangazonAllowed");
 
             app.UseMvc();
         }
