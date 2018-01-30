@@ -7,12 +7,14 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Http;
 using bangazon_inc.Models;
 using bangazon_inc.Data;
+using Microsoft.AspNetCore.Cors;
 
 namespace bangazon_inc.Controllers
 {
     //Author Paul Ellis
     //sets the route to the name of the website/'Department'
     [Route("[controller]")]
+    [EnableCors("BangazonAllowed")]
 
     //creates a new DepartmentController class
     public class DepartmentController : Controller

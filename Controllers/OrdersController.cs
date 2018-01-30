@@ -7,10 +7,13 @@ using bangazon_inc.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Cors;
 
 namespace bangazon_inc.Controllers
 {
     [Route("[controller]")]
+    [EnableCors("BangazonAllowed")]
+
     public class OrdersController : Controller
     {
         private BangazonContext _context;

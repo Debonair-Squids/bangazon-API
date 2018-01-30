@@ -15,6 +15,7 @@ namespace bangazon_inc.Controllers
 {
     //sets the route to the name of the website/'CustomerPayment'
     [Route("[controller]")]
+    [EnableCors("BangazonAllowed")]
 
 
     //PUT/POST/GET/ CustomerPayment

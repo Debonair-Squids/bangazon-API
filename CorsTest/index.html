@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>COOOOOOORS</title>
+</head>
+<body>
+    <h1>hi</h1>
+<script
+  src="http://code.jquery.com/jquery-3.2.1.min.js"
+  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+  crossorigin="anonymous"></script>
+  <script>
+      $.ajax({
+            type: "GET",
+            url: "http://localhost:5000/Department" ,
+            success: function (data) {
+                console.log("Request is successfull CORS is Working");
+            },
+            error: function (data) {
+                console.log("Request Failed CORS is Not Working")
+            }
+        });
+    </script>
+</body>
+</html>

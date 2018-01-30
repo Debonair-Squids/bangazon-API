@@ -13,6 +13,9 @@ namespace bangazon_inc.Controllers
 
 {
     [Route("[controller]")]
+
+    [EnableCors("BangazonAllowed")]
+
     public class CustomerController : Controller
     {
         private BangazonContext _context;
