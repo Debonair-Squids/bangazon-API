@@ -13,7 +13,6 @@ namespace bangazon_inc.Controllers
 
 {
     [Route("[controller]")]
-    // [EnableCors("AllowBangazonEmployeesOnly")]
     public class CustomerController : Controller
     {
         private BangazonContext _context;
@@ -25,11 +24,13 @@ namespace bangazon_inc.Controllers
         // GET All Customers
         //http://localhost:5000/Customer/ - Returns ALL customers
         [HttpGet]
-        public IActionResult Get(bool? active)
+        public IActionResult Get()
         {
-            if(active is bool)
+        string active = HttpContext.Request.Query["active"];
+        Console.WriteLine($"{active}");
+            if(active != null)
             {
-                if(active == true)
+                if(active == "true")
                 {
                     //Gets Customers who placed an order
                     IQueryable<object> customers = from customer in _context.Customer
@@ -44,7 +45,7 @@ namespace bangazon_inc.Controllers
                     return Ok(customers);
                 }
 
-                else if (active == false)
+                else if (active == "false")
                 {
                     //Gets Customers who have NOT placed an order
                     IQueryable<object> customers = from customer in _context.Customer
@@ -104,8 +105,21 @@ namespace bangazon_inc.Controllers
             }
 
         }
+     
         // POST
         // //http://localhost:5000/Customer/ Posts new customer
+  
+        //Exampe raw json object for testing:
+        // //
+        // {
+        //     "DateCreated": "TestDate",
+        //     "FirstName": "TestFirstName", 
+        //     "LastName": "TestLastName", 
+        //     "LastActive": "TestDate",
+        //     "Active": true or false, 
+        // } 
+        
+
         [HttpPost]
         public IActionResult Post([FromBody] Customer newCustomer)
         {
@@ -184,3 +198,16 @@ namespace bangazon_inc.Controllers
 
     }
 }
+
+   // POST
+        // //http://localhost:5000/Customer/ Posts new customer
+  
+        //Exampe raw json object for testing:
+        // //
+        // {
+        //     "DateCreated": "TestDate",
+        //     "FirstName": "TestFirstName", 
+        //     "LastName": "TestLastName", 
+        //     "LastActive": "TestDate",
+        //     "Active": true or false, 
+        // } 
