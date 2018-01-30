@@ -12,8 +12,6 @@ namespace bangazon_inc.Models
     public int ProductId { get; set; }
 
     [Required]
-    public string Name { get; set; }
-    [Required]
     public int Quantity { get; set; }
     [Required]
     public double Price { get; set;}
@@ -29,6 +27,8 @@ namespace bangazon_inc.Models
     // category id foreign key
     public int CategoryId { get; set;}
     public ProductType ProductType { get; set; }
+
+    public virtual ICollection<OrderProduct> ProductOrders {get; set;}
 
   }
 }

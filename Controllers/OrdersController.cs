@@ -19,7 +19,7 @@ namespace bangazon_inc.Controllers
         {
             _context = ctx;
         }
-            [HttpGet]
+        [HttpGet]
         public IActionResult Get()
         {
             var orders = _context.Orders.ToList();
@@ -30,7 +30,8 @@ namespace bangazon_inc.Controllers
             return Ok(orders);
         }
 
-        // GET
+        // GET single
+
         [HttpGet("{id}", Name = "GetSingleOrder")]
         public IActionResult Get(int id)
         {
@@ -57,10 +58,16 @@ namespace bangazon_inc.Controllers
         }
 
         // POST
+        // example post request
+        // {
+        //     "OrderDate": "1483387800",
+        //     "CompleteStatus": 0,
+        //     "CustomerPaymentId": 2,
+        //     "CustomerId": 2
+        // }
         [HttpPost]
         public IActionResult Post([FromBody]Orders Orders)
         {
-            // Orders.OrderDate = DateTime.Now;
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
@@ -85,20 +92,28 @@ namespace bangazon_inc.Controllers
             return CreatedAtRoute("GetSingleOrder", new { id = Orders.OrderId }, Orders);
         }
 
-        // PUT 
+        // PUT
+        // example put request
+        // {
+        //     "OrderId: 1,
+        //     "OrderDate": "1483387800",
+        //     "CompleteStatus": 0,
+        //     "CustomerPaymentId": 2,
+        //     "CustomerId": 2
+        // }
         [HttpPut("{id}")]
-        public IActionResult Put(int id, [FromBody]Orders Orders)
+        public IActionResult Put(int id, [FromBody]Orders modifiedOrders)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != Orders.OrderId)
+            if (id != modifiedOrders.OrderId)
             {
                 return BadRequest();
             }
-            _context.Orders.Update(Orders);
+            _context.Orders.Update(modifiedOrders);
             try
             {
                 _context.SaveChanges();
@@ -115,10 +130,19 @@ namespace bangazon_inc.Controllers
                 }
             }
 
-            return new StatusCodeResult(StatusCodes.Status204NoContent);
+            // return new StatusCodeResult(StatusCodes.Status204NoContent);
+            return Ok(modifiedOrders);
         }
 
         // DELETE
+        // example delete request
+        // {
+        //     "OrderId: 1,
+        //     "OrderDate": "1483387800",
+        //     "CompleteStatus": 0,
+        //     "CustomerPaymentId": 2,
+        //     "CustomerId": 2
+        // }
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
@@ -137,5 +161,64 @@ namespace bangazon_inc.Controllers
         {
             return _context.Orders.Any(o => o.OrderId == OrderId);
         }
+        // // GET url/Orders/{id}
+        // // Gets one order based on an id
+        // // Formats it for the purposes of clean JSON
+        // [HttpGet("{id}", Name = "GetSingleOrder")]
+        // public IActionResult Get([FromRoute] int id)
+        // {
+        //     if (!ModelState.IsValid)
+        //     {
+        //         return BadRequest(ModelState);
+        //     }
+
+        //     try
+        //     {
+        //         Orders orders = _context.Orders.Include("OrderProduct.Product").Single(m => m.OrderId == id);
+        //         List<Product> theseProducts = new List<Product>();
+        //         foreach (OrderProduct OrderProduct in Orders.OrderProduct) /* idk not orders.orderproduct */
+        //         {
+        //             theseProducts.Add(OrderProduct.Product);
+        //         }
+        //         List<ProductOnOrderJSON> jSONProducts = new List<ProductOnOrderJSON>();
+        //         foreach (Product product in theseProducts)
+        //         {
+        //             int index = jSONProducts.FindIndex(x => x.ProductId == product.ProductId);
+        //             if (index != -1)
+        //             {
+        //                 jSONProducts[index].Quantity++;
+        //             }
+        //             else
+        //             {
+        //                 ProductOnOrderJSON newProduct = new ProductOnOrderJSON()
+        //                 {
+        //                     ProductId = product.ProductId,
+        //                     Name = product.Title,
+        //                     Price = product.Price,
+        //                     Quantity = 1
+        //                 };
+        //                 jSONProducts.Add(newProduct);
+        //             }
+        //         }
+        //         OrderWithProductJSON orderWithProducts = new OrderWithProductJSON()
+        //         {
+        //             OrderId = orders.OrderId,
+        //             CustomerId = orders.CustomerId,
+        //             PaymentTypeId = orders.CustomerPaymentId,
+        //             Products = jSONProducts
+        //         };
+        //         if (orders == null)
+        //         {
+        //             return NotFound();
+        //         }
+
+        //         return Ok(orderWithProducts);
+        //     }
+        //     catch (System.InvalidOperationException ex)
+        //     {
+        //         return NotFound(ex);
+        //     }
+        // }
+
     }
 }

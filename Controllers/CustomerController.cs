@@ -23,14 +23,14 @@ namespace bangazon_inc.Controllers
         }
 
         // GET All Customers
-        //http://localhost:5000/Customer/ - Returns ALL customers 
+        //http://localhost:5000/Customer/ - Returns ALL customers
         [HttpGet]
         public IActionResult Get(bool? active)
         {
             if(active is bool)
             {
                 if(active == true)
-                {   
+                {
                     //Gets Customers who placed an order
                     IQueryable<object> customers = from customer in _context.Customer
                     where _context.Orders.Any(order=>(order.CustomerId == customer.CustomerId))
@@ -48,14 +48,14 @@ namespace bangazon_inc.Controllers
                 {
                     //Gets Customers who have NOT placed an order
                     IQueryable<object> customers = from customer in _context.Customer
-                    where !_context.Orders.Any(order=>(order.CustomerId == customer.CustomerId))  
+                    where !_context.Orders.Any(order=>(order.CustomerId == customer.CustomerId))
                     select customer;
 
                     if (customers == null)
                     {
                         return NotFound();
                     }
-                    
+
                     return Ok(customers);
                 }
             }
@@ -94,7 +94,7 @@ namespace bangazon_inc.Controllers
                 {
                     return NotFound();
                 }
-                
+
                 return Ok(customer);
             }
 
@@ -115,7 +115,7 @@ namespace bangazon_inc.Controllers
                 return BadRequest(ModelState);
             }
 
-            _context.Customer.Add(newCustomer);  
+            _context.Customer.Add(newCustomer);
 
             try
             {
@@ -144,8 +144,8 @@ namespace bangazon_inc.Controllers
           return _context.Customer.Count(e => e.CustomerId == customerId) > 0;
         }
 
-        // PUT 
-         //http://localhost:5000/Customer/{id} - edits existing customer  
+        // PUT
+         //http://localhost:5000/Customer/{id} - edits existing customer
         [HttpPut("{id}")]
         public IActionResult Put(int id, [FromBody] Customer modifiedCustomer)
         {
@@ -165,7 +165,7 @@ namespace bangazon_inc.Controllers
             {
                 _context.SaveChanges();
             }
-            
+
             catch (DbUpdateConcurrencyException)
             {
                 if (!CustomerExists(id))
@@ -181,6 +181,6 @@ namespace bangazon_inc.Controllers
             return Ok (modifiedCustomer);
         }
 
-       
+
     }
 }

@@ -19,7 +19,6 @@ namespace bangazon_inc.Models
 
         // department id foreign key
         public int DepartmentId { get; set; }
-        [Required]
         public Department Department { get; set; }
         [Required]
         public bool Supervisor { get; set; }
