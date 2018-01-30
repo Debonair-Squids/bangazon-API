@@ -105,8 +105,21 @@ namespace bangazon_inc.Controllers
             }
 
         }
+     
         // POST
         // //http://localhost:5000/Customer/ Posts new customer
+  
+        //Exampe raw json object for testing:
+        // //
+        // {
+        //     "DateCreated": "TestDate",
+        //     "FirstName": "TestFirstName", 
+        //     "LastName": "TestLastName", 
+        //     "LastActive": "TestDate",
+        //     "Active": true or false, 
+        // } 
+        
+
         [HttpPost]
         public IActionResult Post([FromBody] Customer newCustomer)
         {
@@ -185,3 +198,16 @@ namespace bangazon_inc.Controllers
 
     }
 }
+
+   // POST
+        // //http://localhost:5000/Customer/ Posts new customer
+  
+        //Exampe raw json object for testing:
+        // //
+        // {
+        //     "DateCreated": "TestDate",
+        //     "FirstName": "TestFirstName", 
+        //     "LastName": "TestLastName", 
+        //     "LastActive": "TestDate",
+        //     "Active": true or false, 
+        // } 
