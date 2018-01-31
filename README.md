@@ -9,13 +9,36 @@ The database is going to be hosted on your local computer.
  1. Run `dotnet restore`
  1. Run `dotnet ef migrations add bangazonapi`
  >This will create all the migrations needed for Entity Framework to post items to the database based on the models in the Models/ directory
- 1. Run `dotnet ef database update`
+ 4. Run `dotnet ef database update`
  1. Run `dotnet run`
  > This will compile and run everything as well as initializing the database with some data to get started
 ## Usage
 
 ## Cross-Origin Resource Sharing
+CORS restrictions were set up to only allow requests from bangazon.com.  To test the restriction, and index.html file is available in the CorsTest directory in this project.  The sample page makes an AJAX request to our API on localhost:5000.  To try the test, follow these steps:
 
++ Make sure the API is running and listening on `localhost:5000`.
++ In a separate terminal window, open the CorsTest directory, and run `http serve`.
++ In your browser, run that port and check your dev tools console.  There should be a message stating describing a CORS failure.  This will indicate that the request came from a site not authorized, and CORS is working correctly.
++ Shut down that server process.
++ In your terminal, run `sudo vim etc/hosts`.
++ Type `i` to insert text.
+
+***Make your file match the following:***
+
+
+#### Host Database
+
+localhost is used to configure the loopback interface
+when the system is booting.  Do not change this entry.
+
+```
+127.0.0.1        localhost
+127.0.0.1        www.bangazon.com
+127.0.0.1        bangazon.com
+255.255.255.255  broadcasthost
+::1              localhost
+```
 
 ### Customer
 ||Method|Description|
