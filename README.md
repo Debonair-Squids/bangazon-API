@@ -2,7 +2,7 @@
 This is an API for Bangazon INC. This API will allow users to GET/POST/PUT/DELETE items from the Bangazon Database.
 
 
-# Installing Bangazon API
+## Installing Bangazon API
 
 The database is going to be hosted on your local computer.
  1. Clone the repo on to you local machine.
@@ -47,6 +47,8 @@ when the system is booting.  Do not change this entry.
 | Single | GET |`http://localhost:5000/Customer/{Id}`|
 | Edit | PUT |`http://localhost:5000/Customer/{Id}` |
 
+
+
 #### Customers With Orders
 ||Method|Description|
 |---|---| ----------|
@@ -57,6 +59,30 @@ when the system is booting.  Do not change this entry.
 |---|---| ----------|
 | List | GET |`http://localhost:5000/Customer/?active=false`|
 
+***Reqired Object***
+```
+{
+    "dateCreated": "1/1/2018",
+    "firstName": "Jenna",
+    "lastName": "Solis",
+    "lastActive": "1/2/2018",
+    "activeStatus": true
+}
+```
+***Sample Object***
+
+```
+{
+    "customerId": 1,
+    "dateCreated": "1/1/2018",
+    "firstName": "Jenna",
+    "lastName": "Solis",
+    "lastActive": "1/2/2018",
+    "activeStatus": true
+}
+```
+
+
 
 ### Product Type
 ||Method|Description|
@@ -66,6 +92,22 @@ when the system is booting.  Do not change this entry.
 | Edit | PUT |`http://localhost:5000/productType/{Id}`|
 | Delete | DELETE |`http://localhost:5000/productType/{Id}`|
 
+***Reqired Object***
+```
+{
+    "CategoryName": "shoes",
+}
+```
+***Sample Object***
+
+```
+{
+    "CategoryId": 1,
+    "CategoryName": "shoes",
+}
+```
+
+
 ### Product
 ||Method|Description|
 |---|---| ----------|
@@ -73,6 +115,32 @@ when the system is booting.  Do not change this entry.
 | Single | GET |`http://localhost:5000/product/{Id}`|
 | Edit | PUT |`http://localhost:5000/product/{Id}`|
 | Delete | DELETE |`http://localhost:5000/product/{Id}`|
+
+***Reqired Object***
+```
+{
+    "quantity": 1,
+    "price": 10,
+    "title": "Vans",
+    "description": "new",
+    "customerId": 1,
+    "categoryId": 1
+}
+```
+***Sample Object***
+
+```
+{
+    "productId": 1,
+    "quantity": 1,
+    "price": 10,
+    "title": "Vans",
+    "description": "new",
+    "customerId": 1,
+    "categoryId": 1
+}
+```
+
 
 ### Payment Type
 ||Method|Description|
@@ -82,6 +150,22 @@ when the system is booting.  Do not change this entry.
 | Edit | PUT |`http://localhost:5000/PaymentType/{Id}`|
 | Delete | DELETE |`http://localhost:5000/PaymentType/{Id}`|
 
+***Reqired Object***
+```
+{
+    "paymentTypeName": "Visa"
+}
+```
+***Sample Object***
+
+```
+{
+    "paymentTypeId": 1,
+    "paymentTypeName": "Visa"
+}
+```
+
+
 ### Customer Payment
 ||Method|Description|
 |---|---| ----------|
@@ -89,6 +173,25 @@ when the system is booting.  Do not change this entry.
 | Single | GET |`http://localhost:5000/CustomerPayment/{Id}`|
 | Edit | PUT |`http://localhost:5000/CustomerPayment/{Id}`|
 | Delete | DELETE |`http://localhost:5000/CustomerPayment/{Id}`|
+
+***Reqired Object***
+```
+{
+    "accountNumber": 879988,
+    "paymentTypeId": 1,
+    "customerId": 1,
+}
+```
+***Sample Object***
+
+```
+{
+    "customerPaymentId": 1,
+    "accountNumber": 879988,
+    "paymentTypeId": 1,
+    "customerId": 1,
+}
+```
 
 ### Orders
 ||Method|Description|
@@ -98,6 +201,29 @@ when the system is booting.  Do not change this entry.
 | Edit | PUT |`http://localhost:5000/Orders/{Id}`|
 | Delete | DELETE |`http://localhost:5000/Orders/{Id}`|
 
+***Reqired Object***
+```
+{
+    "orderDate": "01-01-2018",
+    "completeStatus": true,
+    "customerPaymentId": 1,
+    "customerId": 1,
+}
+```
+***Sample Object***
+
+```
+{
+    "orderId": 1,
+    "orderDate": "01-01-2018",
+    "completeStatus": true,
+    "customerPaymentId": 1,
+    "customerId": 1,
+}
+```
+
+
+
 ### Department
 ||Method|Description|
 |---|---| ----------|
@@ -105,6 +231,24 @@ when the system is booting.  Do not change this entry.
 | Single | GET |`http://localhost:5000/Department/{Id}`|
 | Edit | PUT |`http://localhost:5000/Department/{Id}`|
 | Delete | DELETE |`http://localhost:5000/Department/{Id}`|
+
+***Reqired Object***
+```
+{
+    "Name": "IT",
+    "Budget": 40000.99
+}
+```
+***Sample Object***
+
+```
+{
+    "departmentId": 1,
+    "name": "IT",
+    "budget": 40000.99
+}
+```
+
 
 ### Employee
 ||Method|Description|
@@ -114,6 +258,34 @@ when the system is booting.  Do not change this entry.
 | Edit | PUT |`http://localhost:5000/Employee/{Id}`|
 | Delete | DELETE |`http://localhost:5000/Employee/{Id}`|
 
+***Reqired Object***
+```
+{
+    "firstName": "Jessica",
+    "lastName": "Solis",
+    "departmentId": 1,
+    "department": null,
+    "supervisor": true,
+    "startDate": "01-01-1999",
+    "endDate": null
+}
+```
+***Sample Object***
+
+```
+{
+    "employeeId": 1,
+    "firstName": "Jessica",
+    "lastName": "Solis",
+    "departmentId": 1,
+    "department": null,
+    "supervisor": true,
+    "startDate": "01-01-1999",
+    "endDate": null
+}
+```
+
+
 ### Training
 ||Method|Description|
 |---|---| ----------|
@@ -122,6 +294,28 @@ when the system is booting.  Do not change this entry.
 | Edit | PUT |`http://localhost:5000/Training/{Id}`|
 | Delete | DELETE |`http://localhost:5000/Training/{Id}`|
 
+***Reqired Object***
+```
+{
+        "TrainingName": "Just Say No",
+	"MaxAttendees": 30,
+	"StartDate": "01-01-2018",
+	"EndDate":  "01-30-2018"
+}
+```
+***Sample Object***
+
+```
+{
+    "trainingId": 1,
+    "trainingName": "Just Say No",
+    "startDate": "2018-01-01T00:00:00",
+    "endDate": "2018-01-30T00:00:00",
+    "maxAttendees": 30
+}
+```
+
+
 ### Computer
 ||Method|Description|
 |---|---| ----------|
@@ -129,6 +323,26 @@ when the system is booting.  Do not change this entry.
 | Single | GET |`http://localhost:5000/Computer/{Id}`|
 | Edit | PUT |`http://localhost:5000/Computer/{Id}`|
 | Delete | DELETE |`http://localhost:5000/Computer/{Id}`|
+
+***Reqired Object***
+```
+{
+        "ActiveStatus": true,
+	"DatePurchased": "01-01-2018",
+	"DateDecommissioned":  null
+}
+```
+***Sample Object***
+
+```
+{
+    "computerId": 1,
+    "datePurchased": "01-01-2018",
+    "dateDecommissioned": null,
+    "activeStatus": true
+}
+```
+
 
 
 ## Credits
