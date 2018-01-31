@@ -1,11 +1,41 @@
-## Customer
+# Bangazon API
+This is an API for Bangazon INC. This API will allow users to GET/POST/PUT/DELETE items from the Bangazon Database.
+
+
+# Installing Bangazon API
+
+The database is going to be hosted on your local computer.
+ 1. Clone the repo on to you local machine.
+ 1. Run `dotnet restore`
+ 1. Run `dotnet ef migrations add bangazonapi`
+ >This will create all the migrations needed for Entity Framework to post items to the database based on the models in the Models/ directory
+ 1. Run `dotnet ef database update`
+ 1. Run `dotnet run`
+ > This will compile and run everything as well as initializing the database with some data to get started
+## Usage
+
+## Cross-Origin Resource Sharing
+
+
+### Customer
 ||Method|Description|
 |---|---| ----------|
-| List | GET |`http://localhost:5000/customer`|
-| Single | GET |`http://localhost:5000/customer/{Id}`|
-| Edit | PUT |`http://localhost:5000/customer/{Id}` |
+| List | GET |`http://localhost:5000/Customer`|
+| Single | GET |`http://localhost:5000/Customer/{Id}`|
+| Edit | PUT |`http://localhost:5000/Customer/{Id}` |
 
-## Product Type
+#### Customers With Orders
+||Method|Description|
+|---|---| ----------|
+| List | GET |`http://localhost:5000/Customer/?active=true`|
+
+#### Customers Without Orders
+||Method|Description|
+|---|---| ----------|
+| List | GET |`http://localhost:5000/Customer/?active=false`|
+
+
+### Product Type
 ||Method|Description|
 |---|---| ----------|
 | List | GET |`http://localhost:5000/productType`|
@@ -13,7 +43,7 @@
 | Edit | PUT |`http://localhost:5000/productType/{Id}`|
 | Delete | DELETE |`http://localhost:5000/productType/{Id}`|
 
-## Product
+### Product
 ||Method|Description|
 |---|---| ----------|
 | List | GET |`http://localhost:5000/product`|
@@ -21,7 +51,7 @@
 | Edit | PUT |`http://localhost:5000/product/{Id}`|
 | Delete | DELETE |`http://localhost:5000/product/{Id}`|
 
-## Payment Type
+### Payment Type
 ||Method|Description|
 |---|---| ----------|
 | List | GET |`http://localhost:5000/PaymentType`|
@@ -29,7 +59,7 @@
 | Edit | PUT |`http://localhost:5000/PaymentType/{Id}`|
 | Delete | DELETE |`http://localhost:5000/PaymentType/{Id}`|
 
-## Customer Payment
+### Customer Payment
 ||Method|Description|
 |---|---| ----------|
 | List | GET |`http://localhost:5000/CustomerPayment`|
@@ -37,7 +67,7 @@
 | Edit | PUT |`http://localhost:5000/CustomerPayment/{Id}`|
 | Delete | DELETE |`http://localhost:5000/CustomerPayment/{Id}`|
 
-## Orders
+### Orders
 ||Method|Description|
 |---|---| ----------|
 | List | GET |`http://localhost:5000/Orders`|
@@ -45,7 +75,7 @@
 | Edit | PUT |`http://localhost:5000/Orders/{Id}`|
 | Delete | DELETE |`http://localhost:5000/Orders/{Id}`|
 
-## Department
+### Department
 ||Method|Description|
 |---|---| ----------|
 | List | GET |`http://localhost:5000/Department`|
@@ -53,7 +83,7 @@
 | Edit | PUT |`http://localhost:5000/Department/{Id}`|
 | Delete | DELETE |`http://localhost:5000/Department/{Id}`|
 
-## Employee
+### Employee
 ||Method|Description|
 |---|---| ----------|
 | List | GET |`http://localhost:5000/Employee`|
@@ -61,7 +91,7 @@
 | Edit | PUT |`http://localhost:5000/Employee/{Id}`|
 | Delete | DELETE |`http://localhost:5000/Employee/{Id}`|
 
-## Training
+### Training
 ||Method|Description|
 |---|---| ----------|
 | List | GET |`http://localhost:5000/Training`|
@@ -69,10 +99,52 @@
 | Edit | PUT |`http://localhost:5000/Training/{Id}`|
 | Delete | DELETE |`http://localhost:5000/Training/{Id}`|
 
-## Computer
+### Computer
 ||Method|Description|
 |---|---| ----------|
 | List | GET |`http://localhost:5000/Computer`|
 | Single | GET |`http://localhost:5000/Computer/{Id}`|
 | Edit | PUT |`http://localhost:5000/Computer/{Id}`|
 | Delete | DELETE |`http://localhost:5000/Computer/{Id}`|
+
+
+## Credits
+
+Jenna Solis
+https://github.com/Jennabsol
+
+Robert Shock
+https://github.com/RobertShock
+
+Jesse Page
+https://github.com/JPage4
+
+Erin Agobert
+https://github.com/eagobert
+
+Paul Ellis
+https://github.com/tynesellis
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
